@@ -1,0 +1,51 @@
+<meta charset="UTF-8" />
+<title>This is only a test of a title</title>
+
+<!-- Start Open Pixel Minified -->
+<script>
+!function(a,b,c,d,e,f,g,h){a[e]||(f=a[e]=function(){f.process?f.process.apply(f,arguments):f.queue.push(arguments)},f.queue=[],f.t=1*new Date,g=b.createElement(c),g.async=1,g.src=d,h=b.getElementsByTagName(c)[0],h.parentNode.insertBefore(g,h))}(window,document,"script","http://serveme:2000/openpixel.js","opix"),
+opix("init","1234567890");
+opix("event","pageview");
+</script>
+<!-- End Open Pixel Minified -->
+
+
+<!-- Start Open Pixel Unminified -->
+<script>
+  !function(window, document, script, http, opix, one, two, three) {
+
+    // return if the setup has already occurred
+    // this is to prevent double loading openpixel.js if someone accidently had this more than once on a page
+    if (window[opix]) return;
+
+    // setup the queue to collect all of the calls to openpixel.js before it is loaded
+    one = window[opix] = function() {
+      // if openpixel.js has loaded, pass the arugment through to it
+      // if openpixel.js has not loaded yet, queue the calls in an array
+      one.process ? one.process.apply(one, arguments) : one.queue.push(arguments)
+    }
+    // setup an empty queue array
+    one.queue = [];
+    // get the current time (integer) that the page was loaded and save for later
+    one.t = 1 * new Date();
+
+    // create a script tag
+    two = document.createElement(script);
+    // set the script tag to run async
+    two.async = 1;
+    // set the source of the script tag
+    two.src = http;
+
+    // get the first <script> that occures in the document
+    // if this block is the only <script> tag on the page it will get this block
+    three = document.getElementsByTagName(script)[0];
+    // insert the newly created script tag above the first <script> tag in the document
+    // this ensures openpixel.js is loaded asynchronously
+    three.parentNode.insertBefore(two, three)
+  }(window, document, 'script', '//pixel.dockwa.com/v1/openpixel.js', 'opix');
+
+  // initialize with the ID of the what you are trying to
+  opix('init', '1234567890');
+  opix('event', 'pageview');
+</script>
+<!-- End Open Pixel Unminified -->
