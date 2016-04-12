@@ -15,8 +15,8 @@ bn = Chrome 49 //browser name
 md = false //mobile device
 ua = bla bla bla //user agent
 
-utm_source = google //Campaign Source if provided
-utm_medium = email //Campaign Medium if provided
-utm_term = paid //Campaign Term if provided
-utm_content = test //Campaign Content if provided
-utm_campaign=product //Campaign Name if provided
+utm_source = google //Campaign Source
+utm_medium = email //Campaign Medium
+utm_term = paid //Campaign Term
+utm_content = test //Campaign Content
+utm_campaign=product //Campaign Name

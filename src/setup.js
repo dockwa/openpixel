@@ -11,10 +11,10 @@ var Controller = {
         Config.pageViewOnce = true;
         // set 10 minutes page view cookie
         Cookie.set('pageview', 'true', 10, window.location.pathname);
-        new Pixel(value);
+        new Pixel(value, pixelFunc.t);
       }
     } else if(event == 'event' && value != 'pageclose'){
-      new Pixel(value);
+      new Pixel(value, 1*new Date);
     }
   },
 }
@@ -35,6 +35,6 @@ window.addEventListener('unload', function(event) {
     Config.pageCloseOnce = true;
     // set 10 minutes page close cookie
     Cookie.set('pageclose', 'true', 10, window.location.pathname);
-    new Pixel('pageclose');
+    new Pixel('pageclose', 1*new Date);
   }
 });

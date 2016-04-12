@@ -1,115 +1,44 @@
 class Pixel {
-  constructor(event){
+  constructor(event, timestamp){
     this.params = [];
     this.event = event;
-    this.attr = {
-      id:           'getId',
-      uid:          'getUserId',
-      ev:           'getEvent',
-      v:            'getVerion',
-      dl:           'getDocumentLocation',
-      rl:           'getReferrerLocation',
-      ts:           'getTimestamp',
-      de:           'getDocumentEncoding',
-      sr:           'getScreenResolution',
-      vp:           'getViewport',
-      cd:           'getColorDepth',
-      dt:           'getDocumentTitle',
-      bn:           'getBrowserName',
-      md:           'getMobileDevice',
-      ua:           'getUserAgent',
-      utm_source:   'getUtmSource',
-      utm_medium:   'getUtmMedium',
-      utm_term:     'getUtmTerm',
-      utm_content:  'getUtmContent',
-      utm_campaign: 'getUtmCampaign',
-    };
+    this.timestamp = timestamp;
+    this.getAttribute();
     this.buildParams();
     this.send();
+  }
+
+  getAttribute(){
+    this.attr = {
+      id:           ()=>{return Config.id}, // website Id
+      uid:          ()=>{return Cookie.get('uid')}, // user Id
+      ev:           ()=>{return event}, // event being triggered
+      v:            ()=>{return Config.version}, // openpixel.js version
+      dl:           ()=>{return window.location.href}, // document location
+      rl:           ()=>{return document.referrer}, // referrer location
+      ts:           ()=>{return pixelFunc.t}, // timestamp when event was triggered
+      de:           ()=>{return document.characterSet}, // document encoding
+      sr:           ()=>{return window.screen.width + 'x' + window.screen.height}, // screen resolution
+      vp:           ()=>{return window.innerWidth + 'x' + window.innerHeight}, // viewport size
+      cd:           ()=>{return window.screen.colorDepth}, // color depth
+      dt:           ()=>{return document.title}, // document title
+      bn:           ()=>{return Browser.nameAndVersion()}, // browser name and version number
+      md:           ()=>{return Browser.isMobile()}, // is a mobile device?
+      ua:           ()=>{return Browser.userAgent()}, // user agent
+      utm_source:   (key)=>{return Url.getParameterByName(key)}, // get the utm source
+      utm_medium:   (key)=>{return Url.getParameterByName(key)}, // get the utm medium
+      utm_term:     (key)=>{return Url.getParameterByName(key)}, // get the utm term
+      utm_content:  (key)=>{return Url.getParameterByName(key)}, // get the utm concent
+      utm_campaign: (key)=>{return Url.getParameterByName(key)}, // get the utm campaign
+    };
   }
 
   buildParams(){
     for(var index in this.attr) {
       if (this.attr.hasOwnProperty(index)) {
-        this.setParam(index, this[this.attr[index]](index));
+        this.setParam(index, [this.attr[index]](index));
       }
     }
-  }
-
-  getId(){
-    return Config.id;
-  }
-
-  getUserId(){
-    return Cookie.get('uid');
-  }
-
-  getEvent(){
-    return this.event;
-  }
-
-  getVerion(){
-    return Config.version;
-  }
-
-  getDocumentLocation(){
-    return window.location.href;
-  }
-
-  getReferrerLocation(){
-    return document.referrer;
-  }
-
-  getTimestamp(){
-    return pixelFunc.t;
-  }
-
-  getDocumentEncoding(){
-    return document.characterSet;
-  }
-
-  getScreenResolution(){
-    return window.screen.width + 'x' + window.screen.height;
-  }
-
-  getViewport(){
-    return window.innerWidth + 'x' + window.innerHeight;
-  }
-
-  getColorDepth(){
-    return window.screen.colorDepth;
-  }
-
-  getDocumentTitle(){
-    return document.title;
-  }
-
-  getBrowserName(){
-    return Browser.nameAndVersion();
-  }
-
-  getMobileDevice(){
-    return Browser.isMobile();
-  }
-
-  getUserAgent(){
-    return Browser.userAgent();
-  }
-
-  getUtmSource(key){
-    return Url.getParameterByName(key);
-  }
-  getUtmMedium(key){
-    return Url.getParameterByName(key);
-  }
-  getUtmTerm(key){
-    return Url.getParameterByName(key);
-  }
-  getUtmContent(key){
-    return Url.getParameterByName(key);
-  }
-  getUtmCampaign(key){
-    return Url.getParameterByName(key);
   }
 
   setParam(key, val){

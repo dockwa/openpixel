@@ -102,145 +102,91 @@ var Url = {
 };
 
 var Pixel = function () {
-  function Pixel(event) {
+  function Pixel(event, timestamp) {
     _classCallCheck(this, Pixel);
 
     this.params = [];
     this.event = event;
-    this.attr = {
-      id: 'getId',
-      uid: 'getUserId',
-      ev: 'getEvent',
-      v: 'getVerion',
-      dl: 'getDocumentLocation',
-      rl: 'getReferrerLocation',
-      ts: 'getTimestamp',
-      de: 'getDocumentEncoding',
-      sr: 'getScreenResolution',
-      vp: 'getViewport',
-      cd: 'getColorDepth',
-      dt: 'getDocumentTitle',
-      bn: 'getBrowserName',
-      md: 'getMobileDevice',
-      ua: 'getUserAgent',
-      utm_source: 'getUtmSource',
-      utm_medium: 'getUtmMedium',
-      utm_term: 'getUtmTerm',
-      utm_content: 'getUtmContent',
-      utm_campaign: 'getUtmCampaign'
-    };
+    this.timestamp = timestamp;
+    this.getAttribute();
     this.buildParams();
     this.send();
   }
 
   _createClass(Pixel, [{
+    key: 'getAttribute',
+    value: function getAttribute() {
+      this.attr = {
+        id: function id() {
+          return Config.id;
+        }, // website Id
+        uid: function uid() {
+          return Cookie.get('uid');
+        }, // user Id
+        ev: function ev() {
+          return event;
+        }, // event being triggered
+        v: function v() {
+          return Config.version;
+        }, // openpixel.js version
+        dl: function dl() {
+          return window.location.href;
+        }, // document location
+        rl: function rl() {
+          return document.referrer;
+        }, // referrer location
+        ts: function ts() {
+          return pixelFunc.t;
+        }, // timestamp when event was triggered
+        de: function de() {
+          return document.characterSet;
+        }, // document encoding
+        sr: function sr() {
+          return window.screen.width + 'x' + window.screen.height;
+        }, // screen resolution
+        vp: function vp() {
+          return window.innerWidth + 'x' + window.innerHeight;
+        }, // viewport size
+        cd: function cd() {
+          return window.screen.colorDepth;
+        }, // color depth
+        dt: function dt() {
+          return document.title;
+        }, // document title
+        bn: function bn() {
+          return Browser.nameAndVersion();
+        }, // browser name and version number
+        md: function md() {
+          return Browser.isMobile();
+        }, // is a mobile device?
+        ua: function ua() {
+          return Browser.userAgent();
+        }, // user agent
+        utm_source: function utm_source(key) {
+          return Url.getParameterByName(key);
+        }, // get the utm source
+        utm_medium: function utm_medium(key) {
+          return Url.getParameterByName(key);
+        }, // get the utm medium
+        utm_term: function utm_term(key) {
+          return Url.getParameterByName(key);
+        }, // get the utm term
+        utm_content: function utm_content(key) {
+          return Url.getParameterByName(key);
+        }, // get the utm concent
+        utm_campaign: function utm_campaign(key) {
+          return Url.getParameterByName(key);
+        } };
+    }
+  }, {
     key: 'buildParams',
+    // get the utm campaign
     value: function buildParams() {
       for (var index in this.attr) {
         if (this.attr.hasOwnProperty(index)) {
-          this.setParam(index, this[this.attr[index]](index));
+          this.setParam(index, [this.attr[index]](index));
         }
       }
-    }
-  }, {
-    key: 'getId',
-    value: function getId() {
-      return Config.id;
-    }
-  }, {
-    key: 'getUserId',
-    value: function getUserId() {
-      return Cookie.get('uid');
-    }
-  }, {
-    key: 'getEvent',
-    value: function getEvent() {
-      return this.event;
-    }
-  }, {
-    key: 'getVerion',
-    value: function getVerion() {
-      return Config.version;
-    }
-  }, {
-    key: 'getDocumentLocation',
-    value: function getDocumentLocation() {
-      return window.location.href;
-    }
-  }, {
-    key: 'getReferrerLocation',
-    value: function getReferrerLocation() {
-      return document.referrer;
-    }
-  }, {
-    key: 'getTimestamp',
-    value: function getTimestamp() {
-      return pixelFunc.t;
-    }
-  }, {
-    key: 'getDocumentEncoding',
-    value: function getDocumentEncoding() {
-      return document.characterSet;
-    }
-  }, {
-    key: 'getScreenResolution',
-    value: function getScreenResolution() {
-      return window.screen.width + 'x' + window.screen.height;
-    }
-  }, {
-    key: 'getViewport',
-    value: function getViewport() {
-      return window.innerWidth + 'x' + window.innerHeight;
-    }
-  }, {
-    key: 'getColorDepth',
-    value: function getColorDepth() {
-      return window.screen.colorDepth;
-    }
-  }, {
-    key: 'getDocumentTitle',
-    value: function getDocumentTitle() {
-      return document.title;
-    }
-  }, {
-    key: 'getBrowserName',
-    value: function getBrowserName() {
-      return Browser.nameAndVersion();
-    }
-  }, {
-    key: 'getMobileDevice',
-    value: function getMobileDevice() {
-      return Browser.isMobile();
-    }
-  }, {
-    key: 'getUserAgent',
-    value: function getUserAgent() {
-      return Browser.userAgent();
-    }
-  }, {
-    key: 'getUtmSource',
-    value: function getUtmSource(key) {
-      return Url.getParameterByName(key);
-    }
-  }, {
-    key: 'getUtmMedium',
-    value: function getUtmMedium(key) {
-      return Url.getParameterByName(key);
-    }
-  }, {
-    key: 'getUtmTerm',
-    value: function getUtmTerm(key) {
-      return Url.getParameterByName(key);
-    }
-  }, {
-    key: 'getUtmContent',
-    value: function getUtmContent(key) {
-      return Url.getParameterByName(key);
-    }
-  }, {
-    key: 'getUtmCampaign',
-    value: function getUtmCampaign(key) {
-      return Url.getParameterByName(key);
     }
   }, {
     key: 'setParam',
@@ -294,10 +240,10 @@ var Controller = {
         Config.pageViewOnce = true;
         // set 10 minutes page view cookie
         Cookie.set('pageview', 'true', 10, window.location.pathname);
-        new Pixel(value);
+        new Pixel(value, pixelFunc.t);
       }
     } else if (event == 'event' && value != 'pageclose') {
-      new Pixel(value);
+      new Pixel(value, 1 * new Date());
     }
   }
 };
@@ -317,7 +263,7 @@ window.addEventListener('unload', function (event) {
     Config.pageCloseOnce = true;
     // set 10 minutes page close cookie
     Cookie.set('pageclose', 'true', 10, window.location.pathname);
-    new Pixel('pageclose');
+    new Pixel('pageclose', 1 * new Date());
   }
 });
 }(window, document, window["opix"], "opix", "http://stu.ngrok.io/pixel.gif"));
