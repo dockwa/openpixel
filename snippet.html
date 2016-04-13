@@ -3,8 +3,7 @@
 
 <!-- Start Open Pixel Minified -->
 <script>
-!function(a,b,c,d,e,f,g,h,i){a[e]||(g=a[e]=function(){g.process?g.process.apply(g,arguments):g.queue.push(arguments)},g.queue=[],g.t=1*new Date,h=b.createElement(c),h.async=1,h.src=d+"?v="+Math.ceil(new Date/f)*f,i=b.getElementsByTagName(c)[0],i.parentNode.insertBefore(h,i))}(window,document,"script","//pixel.dockwa.com/v1/openpixel.js","opix",259200);
-
+!function(a,b,c,d,e,f,g,h,i){a[e]||(g=a[e]=function(){g.process?g.process.apply(g,arguments):g.queue.push(arguments)},g.queue=[],g.t=1*new Date,h=b.createElement(c),h.async=1,h.src=d+"?v="+Math.ceil(new Date/f)*f,i=b.getElementsByTagName(c)[0],i.parentNode.insertBefore(h,i))}(window,document,"script","http://serveme:2000/openpixel.js","opix",86400000);
 opix("init","1234567890");
 opix("event","pageload");
 </script>
@@ -34,7 +33,7 @@ opix("event","pageload");
     two = document.createElement(script);
     // set the script tag to run async
     two.async = 1;
-    // set the source of the script tag and cache bust every 3 days
+    // set the source of the script tag and cache bust every 24 hours
     two.src = http + '?v=' + (Math.ceil(new Date()/cacheTime)*cacheTime);
 
     // get the first <script> that occures in the document
@@ -43,7 +42,7 @@ opix("event","pageload");
     // insert the newly created script tag above the first <script> tag in the document
     // this ensures openpixel.js is loaded asynchronously
     three.parentNode.insertBefore(two, three)
-  }(window, document, 'script', '//pixel.dockwa.com/v1/openpixel.js', 'opix', 3*24*60*60);
+  }(window, document, 'script', '//pixel.dockwa.com/v1/openpixel.js', 'opix', 24*60*60*1000);
 
   // initialize with the ID of the what you are trying to
   opix('init', '1234567890');
