@@ -8,9 +8,5 @@ var Url = {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
-  },
-
-  hasParameter(name, url){
-    return isset(getParameterByName(name, url));
   }
 }

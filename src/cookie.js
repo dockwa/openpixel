@@ -32,6 +32,11 @@ var Cookie = {
 
   exists(name){
     return isset(this.get(name));
+  },
+
+  // set a cookie that expires in 10 minutes to throttle analytics requests from that page
+  throttle(name){
+    this.set(name, 1, 10, window.location.pathname);
   }
 
 }

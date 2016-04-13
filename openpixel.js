@@ -81,6 +81,12 @@ var Cookie = {
   },
   exists: function exists(name) {
     return isset(this.get(name));
+  },
+
+
+  // set a cookie that expires in 10 minutes to throttle analytics requests from that page
+  throttle: function throttle(name) {
+    this.set(name, 1, 10, window.location.pathname);
   }
 };
 
@@ -95,9 +101,6 @@ var Url = {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
-  },
-  hasParameter: function hasParameter(name, url) {
-    return isset(getParameterByName(name, url));
   }
 };
 
@@ -233,21 +236,22 @@ var Pixel = function () {
 
 
 pixelFunc.process = function (event, value) {
-  if (event == 'init') {
-    Config.id = value;
-    if (!Cookie.exists('uid')) {
-      // set guid for user for 2 years
-      Cookie.set('uid', guid(), 2 * 365 * 24 * 60);
-    }
-  } else if (value == 'pageload') {
-    if (!Config.pageViewOnce && !Cookie.exists('pageload')) {
-      Config.pageViewOnce = true;
-      // set 10 minutes page load cookie
-      Cookie.set('pageload', 'true', 10, window.location.pathname);
-      new Pixel(value, pixelFunc.t);
-    }
-  } else if (event == 'event' && value != 'pageclose') {
-    new Pixel(value, 1 * new Date());
+  if (event == 'pageclose') return;
+  switch (event) {
+    case 'init':
+      Config.id = value;
+      // update the cookie if it exists, if it doesn't, create a new one
+      Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2 * 365 * 24 * 60) : Cookie.set('uid', guid(), 2 * 365 * 24 * 60);
+      break;
+    case 'pageload':
+      if (!Config.pageViewOnce && !Cookie.exists('pageload')) {
+        Config.pageViewOnce = true;
+        // set 10 minutes page load cookie
+        Cookie.throttle('pageload');
+        new Pixel(value, pixelFunc.t);
+      }
+    default:
+      new Pixel(value, 1 * new Date());
   }
 };
 
@@ -256,11 +260,11 @@ for (var i = 0, l = pixelFunc.queue.length; i < l; i++) {
   pixelFunc.process.apply(pixelFunc, pixelFunc.queue[i]);
 }
 
-window.addEventListener('unload', function (event) {
+window.addEventListener('unload', function () {
   if (!Config.pageCloseOnce && !Cookie.exists('pageclose')) {
     Config.pageCloseOnce = true;
     // set 10 minutes page close cookie
-    Cookie.set('pageclose', 'true', 10, window.location.pathname);
+    Cookie.throttle('pageclose');
     new Pixel('pageclose', 1 * new Date());
   }
 });
