@@ -116,6 +116,8 @@ var Pixel = function () {
   _createClass(Pixel, [{
     key: 'getAttribute',
     value: function getAttribute() {
+      var _this = this;
+
       this.attr = {
         id: function id() {
           return Config.id;
@@ -124,7 +126,7 @@ var Pixel = function () {
           return Cookie.get('uid');
         }, // user Id
         ev: function ev() {
-          return event;
+          return _this.event;
         }, // event being triggered
         v: function v() {
           return Config.version;
@@ -136,7 +138,7 @@ var Pixel = function () {
           return document.referrer;
         }, // referrer location
         ts: function ts() {
-          return pixelFunc.t;
+          return _this.timestamp;
         }, // timestamp when event was triggered
         de: function de() {
           return document.characterSet;
@@ -184,7 +186,7 @@ var Pixel = function () {
     value: function buildParams() {
       for (var index in this.attr) {
         if (this.attr.hasOwnProperty(index)) {
-          this.setParam(index, [this.attr[index]](index));
+          this.setParam(index, this.attr[index](index));
         }
       }
     }

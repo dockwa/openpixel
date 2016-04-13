@@ -12,11 +12,11 @@ class Pixel {
     this.attr = {
       id:           ()=>{return Config.id}, // website Id
       uid:          ()=>{return Cookie.get('uid')}, // user Id
-      ev:           ()=>{return event}, // event being triggered
+      ev:           ()=>{return this.event}, // event being triggered
       v:            ()=>{return Config.version}, // openpixel.js version
       dl:           ()=>{return window.location.href}, // document location
       rl:           ()=>{return document.referrer}, // referrer location
-      ts:           ()=>{return pixelFunc.t}, // timestamp when event was triggered
+      ts:           ()=>{return this.timestamp}, // timestamp when event was triggered
       de:           ()=>{return document.characterSet}, // document encoding
       sr:           ()=>{return window.screen.width + 'x' + window.screen.height}, // screen resolution
       vp:           ()=>{return window.innerWidth + 'x' + window.innerHeight}, // viewport size
@@ -36,7 +36,7 @@ class Pixel {
   buildParams(){
     for(var index in this.attr) {
       if (this.attr.hasOwnProperty(index)) {
-        this.setParam(index, [this.attr[index]](index));
+        this.setParam(index, this.attr[index](index));
       }
     }
   }
