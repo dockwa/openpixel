@@ -242,12 +242,12 @@ pixelFunc.process = function (method, value) {
     // update the cookie if it exists, if it doesn't, create a new one
     Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2 * 365 * 24 * 60) : Cookie.set('uid', guid(), 2 * 365 * 24 * 60);
   } else if (method == 'event') {
-    if (value == 'pageload' && !Config.pageViewOnce && !Cookie.exists('pageload')) {
-      Config.pageViewOnce = true;
+    if (value == 'pageload' && !Config.pageLoadOnce && !Cookie.exists('pageload')) {
+      Config.pageLoadOnce = true;
       // set 10 minutes page load cookie
       Cookie.throttle('pageload');
       new Pixel(value, pixelFunc.t);
-    } else if (value != 'pageload' || value != 'pageunload') {
+    } else if (value != 'pageload' && value != 'pageclose') {
       new Pixel(value, 1 * new Date());
     }
   }
