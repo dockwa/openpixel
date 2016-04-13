@@ -3,16 +3,17 @@
 
 <!-- Start Open Pixel Minified -->
 <script>
-!function(a,b,c,d,e,f,g,h){a[e]||(f=a[e]=function(){f.process?f.process.apply(f,arguments):f.queue.push(arguments)},f.queue=[],f.t=1*new Date,g=b.createElement(c),g.async=1,g.src=d,h=b.getElementsByTagName(c)[0],h.parentNode.insertBefore(g,h))}(window,document,"script","http://serveme:2000/openpixel.js","opix"),
+!function(a,b,c,d,e,f,g,h,i){a[e]||(g=a[e]=function(){g.process?g.process.apply(g,arguments):g.queue.push(arguments)},g.queue=[],g.t=1*new Date,h=b.createElement(c),h.async=1,h.src=d+"?v="+Math.ceil(new Date/f)*f,i=b.getElementsByTagName(c)[0],i.parentNode.insertBefore(h,i))}(window,document,"script","//pixel.dockwa.com/v1/openpixel.js","opix",259200);
+
 opix("init","1234567890");
-opix("event","pageview");
+opix("event","pageload");
 </script>
 <!-- End Open Pixel Minified -->
 
 
 <!-- Start Open Pixel Unminified -->
 <script>
-  !function(window, document, script, http, opix, one, two, three) {
+  !function(window, document, script, http, opix, cacheTime, one, two, three) {
 
     // return if the setup has already occurred
     // this is to prevent double loading openpixel.js if someone accidently had this more than once on a page
@@ -33,8 +34,8 @@ opix("event","pageview");
     two = document.createElement(script);
     // set the script tag to run async
     two.async = 1;
-    // set the source of the script tag
-    two.src = http;
+    // set the source of the script tag and cache bust every 3 days
+    two.src = http + '?v=' + (Math.ceil(new Date()/cacheTime)*cacheTime);
 
     // get the first <script> that occures in the document
     // if this block is the only <script> tag on the page it will get this block
@@ -42,10 +43,10 @@ opix("event","pageview");
     // insert the newly created script tag above the first <script> tag in the document
     // this ensures openpixel.js is loaded asynchronously
     three.parentNode.insertBefore(two, three)
-  }(window, document, 'script', '//pixel.dockwa.com/v1/openpixel.js', 'opix');
+  }(window, document, 'script', '//pixel.dockwa.com/v1/openpixel.js', 'opix', 3*24*60*60);
 
   // initialize with the ID of the what you are trying to
   opix('init', '1234567890');
-  opix('event', 'pageview');
+  opix('event', 'pageload');
 </script>
 <!-- End Open Pixel Unminified -->

@@ -235,11 +235,11 @@ var Controller = {
         // set guid for user for 2 years
         Cookie.set('uid', guid(), 2 * 365 * 24 * 60);
       }
-    } else if (value == 'pageview') {
-      if (!Config.pageViewOnce && !Cookie.exists('pageview')) {
+    } else if (value == 'pageload') {
+      if (!Config.pageViewOnce && !Cookie.exists('pageload')) {
         Config.pageViewOnce = true;
         // set 10 minutes page view cookie
-        Cookie.set('pageview', 'true', 10, window.location.pathname);
+        Cookie.set('pageload', 'true', 10, window.location.pathname);
         new Pixel(value, pixelFunc.t);
       }
     } else if (event == 'event' && value != 'pageclose') {
