@@ -3,13 +3,21 @@ class Pixel {
     this.params = [];
     this.event = event;
     this.timestamp = timestamp;
-    this.getAttribute();
     this.buildParams();
     this.send();
   }
 
+  buildParams(){
+    var attr = this.getAttribute();
+    for(var index in attr) {
+      if (attr.hasOwnProperty(index)) {
+        this.setParam(index, attr[index](index));
+      }
+    }
+  }
+
   getAttribute(){
-    this.attr = {
+    return {
       id:           ()=>{return Config.id}, // website Id
       uid:          ()=>{return Cookie.get('uid')}, // user Id
       ev:           ()=>{return this.event}, // event being triggered
@@ -30,14 +38,6 @@ class Pixel {
       utm_term:     (key)=>{return Url.getParameterByName(key)}, // get the utm term
       utm_content:  (key)=>{return Url.getParameterByName(key)}, // get the utm concent
       utm_campaign: (key)=>{return Url.getParameterByName(key)}, // get the utm campaign
-    };
-  }
-
-  buildParams(){
-    for(var index in this.attr) {
-      if (this.attr.hasOwnProperty(index)) {
-        this.setParam(index, this.attr[index](index));
-      }
     }
   }
 

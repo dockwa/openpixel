@@ -17,10 +17,11 @@ var isset = function isset(variable) {
 };
 
 var guid = function guid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-  }
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16 | 0,
+        v = c == 'x' ? r : r & 0x3 | 0x8;
+    return v.toString(16);
+  });
 };
 
 var Browser = {
@@ -111,17 +112,26 @@ var Pixel = function () {
     this.params = [];
     this.event = event;
     this.timestamp = timestamp;
-    this.getAttribute();
     this.buildParams();
     this.send();
   }
 
   _createClass(Pixel, [{
+    key: 'buildParams',
+    value: function buildParams() {
+      var attr = this.getAttribute();
+      for (var index in attr) {
+        if (attr.hasOwnProperty(index)) {
+          this.setParam(index, attr[index](index));
+        }
+      }
+    }
+  }, {
     key: 'getAttribute',
     value: function getAttribute() {
       var _this = this;
 
-      this.attr = {
+      return {
         id: function id() {
           return Config.id;
         }, // website Id
@@ -184,17 +194,8 @@ var Pixel = function () {
         } };
     }
   }, {
-    key: 'buildParams',
-    // get the utm campaign
-    value: function buildParams() {
-      for (var index in this.attr) {
-        if (this.attr.hasOwnProperty(index)) {
-          this.setParam(index, this.attr[index](index));
-        }
-      }
-    }
-  }, {
     key: 'setParam',
+    // get the utm campaign
     value: function setParam(key, val) {
       if (isset(val)) {
         this.params.push(key + '=' + val);
@@ -235,23 +236,20 @@ var Pixel = function () {
 // process the queue and future incoming commands
 
 
-pixelFunc.process = function (event, value) {
-  if (event == 'pageclose') return;
-  switch (event) {
-    case 'init':
-      Config.id = value;
-      // update the cookie if it exists, if it doesn't, create a new one
-      Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2 * 365 * 24 * 60) : Cookie.set('uid', guid(), 2 * 365 * 24 * 60);
-      break;
-    case 'pageload':
-      if (!Config.pageViewOnce && !Cookie.exists('pageload')) {
-        Config.pageViewOnce = true;
-        // set 10 minutes page load cookie
-        Cookie.throttle('pageload');
-        new Pixel(value, pixelFunc.t);
-      }
-    default:
+pixelFunc.process = function (method, value) {
+  if (method == 'init') {
+    Config.id = value;
+    // update the cookie if it exists, if it doesn't, create a new one
+    Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2 * 365 * 24 * 60) : Cookie.set('uid', guid(), 2 * 365 * 24 * 60);
+  } else if (method == 'event') {
+    if (value == 'pageload' && !Config.pageViewOnce && !Cookie.exists('pageload')) {
+      Config.pageViewOnce = true;
+      // set 10 minutes page load cookie
+      Cookie.throttle('pageload');
+      new Pixel(value, pixelFunc.t);
+    } else if (value != 'pageload' || value != 'pageunload') {
       new Pixel(value, 1 * new Date());
+    }
   }
 };
 
