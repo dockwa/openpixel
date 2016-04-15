@@ -1,9 +1,12 @@
+// update the cookie if it exists, if it doesn't, create a new one, lasting 2 years
+Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2*365*24*60) : Cookie.set('uid', guid(), 2*365*24*60);
+// save any utms through as session cookies
+Cookie.setUtms();
+
 // process the queue and future incoming commands
 pixelFunc.process = function(method, value) {
   if(method == 'init') {
     Config.id = value;
-    // update the cookie if it exists, if it doesn't, create a new one
-    Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2*365*24*60) : Cookie.set('uid', guid(), 2*365*24*60);
   } else if(method == 'event') {
     if(value == 'pageload' && !Config.pageLoadOnce && !Cookie.exists('pageload')){
       Config.pageLoadOnce = true;

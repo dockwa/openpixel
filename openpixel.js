@@ -88,6 +88,33 @@ var Cookie = {
   // set a cookie that expires in 10 minutes to throttle analytics requests from that page
   throttle: function throttle(name) {
     this.set(name, 1, 10, window.location.pathname);
+  },
+  setUtms: function setUtms() {
+    var utmArray = ['utm_source', 'utm_medium', 'utm_term', 'utm_content', 'utm_campaign'];
+    var exists = false;
+    for (var i = 0, l = utmArray.length; i < l; i++) {
+      if (isset(Url.getParameterByName(utmArray[i]))) {
+        exists = true;
+        break;
+      }
+    }
+    if (exists) {
+      var val,
+          save = {};
+      for (var i = 0, l = utmArray.length; i < l; i++) {
+        val = Url.getParameterByName(utmArray[i]);
+        if (isset(val)) {
+          save[utmArray[i]] = val;
+        }
+      }
+      this.set('utm', JSON.stringify(save));
+    }
+  },
+  getUtm: function getUtm(name) {
+    if (this.exists('utm')) {
+      var utms = JSON.parse(this.get('utm'));
+      return name in utms ? utms[name] : "";
+    }
   }
 };
 
@@ -178,19 +205,19 @@ var Pixel = function () {
           return Browser.userAgent();
         }, // user agent
         utm_source: function utm_source(key) {
-          return Url.getParameterByName(key);
+          return Cookie.getUtm(key);
         }, // get the utm source
         utm_medium: function utm_medium(key) {
-          return Url.getParameterByName(key);
+          return Cookie.getUtm(key);
         }, // get the utm medium
         utm_term: function utm_term(key) {
-          return Url.getParameterByName(key);
+          return Cookie.getUtm(key);
         }, // get the utm term
         utm_content: function utm_content(key) {
-          return Url.getParameterByName(key);
+          return Cookie.getUtm(key);
         }, // get the utm concent
         utm_campaign: function utm_campaign(key) {
-          return Url.getParameterByName(key);
+          return Cookie.getUtm(key);
         } };
     }
   }, {
@@ -233,14 +260,17 @@ var Pixel = function () {
   return Pixel;
 }();
 
+// update the cookie if it exists, if it doesn't, create a new one, lasting 2 years
+
+
+Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2 * 365 * 24 * 60) : Cookie.set('uid', guid(), 2 * 365 * 24 * 60);
+// save any utms through as session cookies
+Cookie.setUtms();
+
 // process the queue and future incoming commands
-
-
 pixelFunc.process = function (method, value) {
   if (method == 'init') {
     Config.id = value;
-    // update the cookie if it exists, if it doesn't, create a new one
-    Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2 * 365 * 24 * 60) : Cookie.set('uid', guid(), 2 * 365 * 24 * 60);
   } else if (method == 'event') {
     if (value == 'pageload' && !Config.pageLoadOnce && !Cookie.exists('pageload')) {
       Config.pageLoadOnce = true;

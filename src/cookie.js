@@ -37,6 +37,34 @@ var Cookie = {
   // set a cookie that expires in 10 minutes to throttle analytics requests from that page
   throttle(name){
     this.set(name, 1, 10, window.location.pathname);
+  },
+
+  setUtms(){
+    var utmArray = ['utm_source','utm_medium','utm_term','utm_content','utm_campaign'];
+    var exists = false;
+    for(var i = 0, l = utmArray.length; i < l; i++){
+      if( isset(Url.getParameterByName(utmArray[i])) ){
+        exists = true;
+        break;
+      }
+    }
+    if(exists){
+      var val, save = {};
+      for(var i = 0, l = utmArray.length; i < l; i++){
+        val = Url.getParameterByName(utmArray[i]);
+        if(isset(val)){
+          save[utmArray[i]] = val;
+        }
+      }
+      this.set('utm', JSON.stringify(save));
+    }
+  },
+
+  getUtm(name){
+    if(this.exists('utm')){
+      var utms = JSON.parse(this.get('utm'));
+      return name in utms ? utms[name] : "";
+    }
   }
 
 }
