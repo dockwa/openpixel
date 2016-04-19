@@ -1,5 +1,5 @@
-// Open Pixel v1.0.0 | Created By Stuart Yamartino | MIT License | Copyright (c) 2016 Dockwa, Inc.
-;(function(window, document, pixelFunc, pixelFuncName, pixelEndpoint) {
+// Open Pixel v1.0.0 | Published By Dockwa, Inc. | Created By Stuart Yamartino | MIT License
+;(function(window, document, pixelFunc, pixelFuncName, pixelEndpoint, versionNumber) {
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -10,7 +10,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Config = {
   id: '',
-  version: '1'
+  version: versionNumber
 };
 
 // check if a varaible is not undefined, null, or blank
@@ -340,4 +340,4 @@ window.onload = function () {
     }.bind(aTags[i]);
   }
 };
-}(window, document, window["opix"], "opix", "http://stu.ngrok.io/pixel.gif"));
+}(window, document, window["opix"], "opix", "http://stu.ngrok.io/pixel.gif", 1));

@@ -1,4 +1,4 @@
 var Config = {
   id: '',
-  version: '1'
+  version: versionNumber
 }
