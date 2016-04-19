@@ -17,11 +17,11 @@ var isset = function isset(variable) {
 };
 
 var guid = function guid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = Math.random() * 16 | 0,
+  return Config.version + '-xxxxxxxx-'.replace(/[x]/g, function (c) {
+    var r = Math.random() * 36 | 0,
         v = c == 'x' ? r : r & 0x3 | 0x8;
-    return v.toString(16);
-  });
+    return v.toString(36);
+  }) + (1 * new Date()).toString(36);
 };
 
 var Browser = {
