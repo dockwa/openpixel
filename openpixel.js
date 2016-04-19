@@ -4,6 +4,8 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Config = {
@@ -16,12 +18,31 @@ var isset = function isset(variable) {
   return typeof variable !== "undefined" && variable !== null && variable !== '';
 };
 
+var now = function now() {
+  return 1 * new Date();
+};
+
 var guid = function guid() {
   return Config.version + '-xxxxxxxx-'.replace(/[x]/g, function (c) {
     var r = Math.random() * 36 | 0,
         v = c == 'x' ? r : r & 0x3 | 0x8;
     return v.toString(36);
   }) + (1 * new Date()).toString(36);
+};
+
+// reduces all optinal data down to a string
+var optinalData = function optinalData(data) {
+  if (isset(data) === false) {
+    return '';
+  } else if ((typeof data === 'undefined' ? 'undefined' : _typeof(data)) === 'object') {
+    // runs optinalData again to reduce to string incase something else was returned
+    return optinalData(JSON.stringify(data));
+  } else if (typeof data === 'function') {
+    // runs the function and calls optinalData again to reduce further if it isn't a string
+    return optinalData(data());
+  } else {
+    return String(data);
+  }
 };
 
 var Browser = {
@@ -129,16 +150,20 @@ var Url = {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
+  },
+  externalHost: function externalHost(link) {
+    return link.hostname != location.hostname && link.protocol.indexOf('http') === 0;
   }
 };
 
 var Pixel = function () {
-  function Pixel(event, timestamp) {
+  function Pixel(event, timestamp, optinal) {
     _classCallCheck(this, Pixel);
 
     this.params = [];
     this.event = event;
     this.timestamp = timestamp;
+    this.optinal = optinalData(optinal);
     this.buildParams();
     this.send();
   }
@@ -168,6 +193,9 @@ var Pixel = function () {
         ev: function ev() {
           return _this.event;
         }, // event being triggered
+        ed: function ed() {
+          return _this.optinal;
+        }, // any event data to pass along
         v: function v() {
           return Config.version;
         }, // openpixel.js version
@@ -268,7 +296,7 @@ Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2 * 365 * 24 * 60) :
 Cookie.setUtms();
 
 // process the queue and future incoming commands
-pixelFunc.process = function (method, value) {
+pixelFunc.process = function (method, value, optinal) {
   if (method == 'init') {
     Config.id = value;
   } else if (method == 'event') {
@@ -276,9 +304,9 @@ pixelFunc.process = function (method, value) {
       Config.pageLoadOnce = true;
       // set 10 minutes page load cookie
       Cookie.throttle('pageload');
-      new Pixel(value, pixelFunc.t);
+      new Pixel(value, pixelFunc.t, optinal);
     } else if (value != 'pageload' && value != 'pageclose') {
-      new Pixel(value, 1 * new Date());
+      new Pixel(value, now(), optinal);
     }
   }
 };
@@ -293,7 +321,23 @@ window.addEventListener('unload', function () {
     Config.pageCloseOnce = true;
     // set 10 minutes page close cookie
     Cookie.throttle('pageclose');
-    new Pixel('pageclose', 1 * new Date());
+    new Pixel('pageclose', now(), function () {
+      // if a link was clicked in the last 5 seconds that goes to an extenal host, pass it through as event data
+      if (isset(Config.externalHost) && now() - Config.externalHost.time < 5 * 1000) {
+        return Config.externalHost.link;
+      }
+    });
   }
 });
+
+window.onload = function () {
+  var aTags = document.getElementsByTagName('a');
+  for (var i = 0, l = aTags.length; i < l; i++) {
+    aTags[i].onclick = function (e) {
+      if (Url.externalHost(this)) {
+        Config.externalHost = { link: this.href, time: now() };
+      }
+    }.bind(aTags[i]);
+  }
+};
 }(window, document, window["opix"], "opix", "http://stu.ngrok.io/pixel.gif"));

@@ -4,7 +4,7 @@ Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2*365*24*60) : Cooki
 Cookie.setUtms();
 
 // process the queue and future incoming commands
-pixelFunc.process = function(method, value) {
+pixelFunc.process = function(method, value, optinal) {
   if(method == 'init') {
     Config.id = value;
   } else if(method == 'event') {
@@ -12,9 +12,9 @@ pixelFunc.process = function(method, value) {
       Config.pageLoadOnce = true;
       // set 10 minutes page load cookie
       Cookie.throttle('pageload');
-      new Pixel(value, pixelFunc.t);
+      new Pixel(value, pixelFunc.t, optinal);
     } else if(value != 'pageload' && value != 'pageclose'){
-      new Pixel(value, 1*new Date);
+      new Pixel(value, now(), optinal);
     }
   }
 }
@@ -29,6 +29,22 @@ window.addEventListener('unload', function() {
     Config.pageCloseOnce = true;
     // set 10 minutes page close cookie
     Cookie.throttle('pageclose');
-    new Pixel('pageclose', 1*new Date);
+    new Pixel('pageclose', now(), function(){
+      // if a link was clicked in the last 5 seconds that goes to an extenal host, pass it through as event data
+      if(isset(Config.externalHost) && (now() - Config.externalHost.time) < 5*1000){
+        return Config.externalHost.link;
+      }
+    });
   }
 });
+
+window.onload = function() {
+  var aTags = document.getElementsByTagName('a');
+  for (var i = 0, l = aTags.length; i < l; i++) {
+    aTags[i].onclick = function(e) {
+      if(Url.externalHost(this)){
+        Config.externalHost = {link:this.href, time:now()};
+      }
+    }.bind(aTags[i])
+  }
+}

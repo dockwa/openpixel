@@ -8,5 +8,9 @@ var Url = {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
+  },
+
+  externalHost(link) {
+    return link.hostname != location.hostname && link.protocol.indexOf('http') === 0;
   }
 }

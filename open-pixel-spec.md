@@ -3,7 +3,7 @@ open pixel:
 id = SJO12ZW                    //id for the app/website you are tracking
 uid= 234234234                  //id of the user
 ev = pageload                   //the event that is being triggered
-evd= {'somedata': 123}          //optional event data
+ed = {'somedata': 123}          //event data that can be passed in, can be a function, object, or string
 v  = 1                          //pixel version number
 dl = https://dockwa.com/explore //document location
 rl = https://www.google.com     //referrer location
