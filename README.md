@@ -1,5 +1,5 @@
 | Key          | Value               | Details                                                         |
-| ------------ |:-------------------:| --------------------------------------------------------------: |
+| ------------ | ------------------- | --------------------------------------------------------------- |
 | id           | SJO12ZW             | id for the app/website you are tracking                         |
 | uid          | 1-cwq4oelu-in95g8xy | id of the user                                                  |
 | ev           | pageload            | the event that is being triggered                               |
