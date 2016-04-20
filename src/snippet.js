@@ -1,16 +1,4 @@
-<!-- Start Open Pixel Minified -->
-<script>
-!function(a,b,c,d,e,f,g,h,i){a[e]||(g=a[e]=function(){g.process?g.process.apply(g,arguments):g.queue.push(arguments)},g.queue=[],g.t=1*new Date,h=b.createElement(c),h.async=1,h.src=d+"?t="+Math.ceil(new Date/f)*f,i=b.getElementsByTagName(c)[0],i.parentNode.insertBefore(h,i))}(window,document,"script","https://static.dockwa-analytics.net/v1/openpixel.js","opix",86400000);
-opix("init","1234567890");
-opix("event","pageload");
-</script>
-<!-- End Open Pixel Minified -->
-
-
-<!-- Start Open Pixel Unminified -->
-<script>
-  !function(window, document, script, http, opix, cacheTime, one, two, three) {
-
+!function(window, document, script, http, opix, cacheTime, one, two, three) {
     // return if the setup has already occurred
     // this is to prevent double loading openpixel.js if someone accidently had this more than once on a page
     if (window[opix]) return;
@@ -39,10 +27,6 @@ opix("event","pageload");
     // insert the newly created script tag above the first <script> tag in the document
     // this ensures openpixel.js is loaded asynchronously
     three.parentNode.insertBefore(two, three)
-  }(window, document, 'script', 'https://static.dockwa-analytics.net/v1/openpixel.js', 'opix', 24*60*60*1000);
-
-  // initialize with the ID of website
-  opix('init', '1234567890');
-  opix('event', 'pageload');
-</script>
-<!-- End Open Pixel Unminified -->
+}(window, document, 'script', js_url, opix_func, 24*60*60*1000);
+opix("init","ID-XXXXXXXX");
+opix("event","pageload");

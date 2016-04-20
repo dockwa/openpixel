@@ -16,7 +16,7 @@ var JS_ENDPOINT        = 'https://static.dockwa-analytics.net/v1/openpixel.js';
 var VERSION            = '1';
 // ------------------------------------------------------------------------//
 
-// JS concat, strip debugging and minify
+// ---- Compile openpixel.js and openpixel.min.js files ---- //
 gulp.task('openpixel', function() {
   gulp.src([
     './src/config.js',
@@ -39,7 +39,6 @@ gulp.task('openpixel', function() {
   .pipe(inject.prepend(HEADER_COMMENT))
   // This will output the non-minified version
   .pipe(gulp.dest(DESTINATION_FOLDER))
-
   // This will minify and rename to openpixel.min.js
   .pipe(uglify())
   .pipe(inject.prepend(HEADER_COMMENT))
@@ -47,17 +46,26 @@ gulp.task('openpixel', function() {
   .pipe(gulp.dest(DESTINATION_FOLDER));
 });
 
-// JS concat, strip debugging and minify
-// gulp.task('snippet', function() {
-//   gulp.src('./src/snippet.html')
-//   .pipe(inject.replace('replacejsendpoint', JS_ENDPOINT))
-//   .pipe(inject.replace('replacefuncname', PIXEL_FUNC_NAME))
-//   // This will minify and rename to pressure.min.js
-//   .pipe(uglify())
-//   .pipe(rename({ extname: '.min.js' }))
-//   .pipe(gulp.dest(DESTINATION_FOLDER));
-// });
 
-gulp.task('watch', function() {
-  gulp.watch('src/*', ['openpixel']);
+// ---- Compile snippet.html file ---- //
+gulp.task('snippet', function() {
+  gulp.src('./src/snippet.js')
+  .pipe(inject.replace('js_url', '"'+JS_ENDPOINT+'"'))
+  .pipe(inject.replace('opix_func', '"'+PIXEL_FUNC_NAME+'"'))
+  // This will minify and rename to pressure.min.js
+  .pipe(uglify())
+  .pipe(inject.prepend('<!-- Start Open Pixel Snippet -->\n<script>\n'))
+  .pipe(inject.append('\n</script>\n<!-- End Open Pixel Snippet -->'))
+  .pipe(rename({ extname: '.html' }))
+  .pipe(gulp.dest(DESTINATION_FOLDER));
 });
+
+// watch files and run gulp
+gulp.task('watch', function() {
+  gulp.watch('src/*', ['openpixel', 'snippet']);
+});
+
+// run all tasks once
+gulp.task('run', function() {
+  gulp.start('openpixel', 'snippet');
+})
