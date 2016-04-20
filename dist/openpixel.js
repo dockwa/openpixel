@@ -341,4 +341,4 @@ window.onload = function () {
     }.bind(aTags[i]);
   }
 };
-}(window, document, window["opix"], "opix", "https://tracker.dockwa.com/pixel.gif", 1));
+}(window, document, window["dckw"], "dckw", "https://tracker.dockwa.com/pixel.gif", 1));

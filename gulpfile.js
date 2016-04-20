@@ -10,7 +10,7 @@ var babel  = require('gulp-babel');
 // ---------- Configurations for your custom build of open pixel ---------- //
 var HEADER_COMMENT     = '// Open Pixel v1.0.0 | Published By Dockwa, Inc. | Created By Stuart Yamartino | MIT License\n';
 var DESTINATION_FOLDER = './dist';
-var PIXEL_FUNC_NAME    = 'opix';
+var PIXEL_FUNC_NAME    = 'dckw';
 var PIXEL_ENDPOINT     = 'https://tracker.dockwa.com/pixel.gif';
 var JS_ENDPOINT        = 'https://static.dockwa-analytics.net/v1/openpixel.js';
 var VERSION            = '1';
@@ -50,8 +50,8 @@ gulp.task('openpixel', function() {
 // ---- Compile snippet.html file ---- //
 gulp.task('snippet', function() {
   gulp.src('./src/snippet.js')
-  .pipe(inject.replace('js_url', '"'+JS_ENDPOINT+'"'))
-  .pipe(inject.replace('opix_func', '"'+PIXEL_FUNC_NAME+'"'))
+  .pipe(inject.replace('js_url', JS_ENDPOINT))
+  .pipe(inject.replace('opix_func', PIXEL_FUNC_NAME))
   // This will minify and rename to pressure.min.js
   .pipe(uglify())
   .pipe(inject.prepend('<!-- Start Open Pixel Snippet -->\n<script>\n'))
