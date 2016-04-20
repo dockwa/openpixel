@@ -8,10 +8,10 @@ pixelFunc.process = function(method, value, optinal) {
   if(method == 'init') {
     Config.id = value;
   } else if(method == 'event') {
-    if(value == 'pageload' && !Config.pageLoadOnce && !Cookie.exists('pageload')){
+    if(value == 'pageload' && !Config.pageLoadOnce){
       Config.pageLoadOnce = true;
       // set 10 minutes page load cookie
-      Cookie.throttle('pageload');
+      // Cookie.throttle('pageload');
       new Pixel(value, pixelFunc.t, optinal);
     } else if(value != 'pageload' && value != 'pageclose'){
       new Pixel(value, now(), optinal);
@@ -25,10 +25,10 @@ for(var i = 0, l = pixelFunc.queue.length; i < l; i++) {
 }
 
 window.addEventListener('unload', function() {
-  if(!Config.pageCloseOnce && !Cookie.exists('pageclose')){
+  if(!Config.pageCloseOnce){
     Config.pageCloseOnce = true;
     // set 10 minutes page close cookie
-    Cookie.throttle('pageclose');
+    // Cookie.throttle('pageclose');
     new Pixel('pageclose', now(), function(){
       // if a link was clicked in the last 5 seconds that goes to an extenal host, pass it through as event data
       if(isset(Config.externalHost) && (now() - Config.externalHost.time) < 5*1000){

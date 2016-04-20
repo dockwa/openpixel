@@ -11,8 +11,8 @@ var babel  = require('gulp-babel');
 var HEADER_COMMENT     = '// Open Pixel v1.0.0 | Published By Dockwa, Inc. | Created By Stuart Yamartino | MIT License\n';
 var DESTINATION_FOLDER = './dist';
 var PIXEL_FUNC_NAME    = 'opix';
-var PIXEL_ENDPOINT     = 'http://stu.ngrok.io/pixel.gif';
-var JS_ENDPOINT        = 'http://stu.ngrok.io/pixel.gif';
+var PIXEL_ENDPOINT     = 'https://tracker.dockwa.com/pixel.gif';
+var JS_ENDPOINT        = 'https://static.dockwa-analytics.net/v1/openpixel.js';
 var VERSION            = '1';
 // ------------------------------------------------------------------------//
 
@@ -48,15 +48,15 @@ gulp.task('openpixel', function() {
 });
 
 // JS concat, strip debugging and minify
-gulp.task('snippet', function() {
-  gulp.src('./src/snippet.html')
-  .pipe(inject.replace('replacejsendpoint', JS_ENDPOINT))
-  .pipe(inject.replace('replacefuncname', PIXEL_FUNC_NAME))
-  // This will minify and rename to pressure.min.js
-  .pipe(uglify())
-  .pipe(rename({ extname: '.min.js' }))
-  .pipe(gulp.dest(DESTINATION_FOLDER));
-});
+// gulp.task('snippet', function() {
+//   gulp.src('./src/snippet.html')
+//   .pipe(inject.replace('replacejsendpoint', JS_ENDPOINT))
+//   .pipe(inject.replace('replacefuncname', PIXEL_FUNC_NAME))
+//   // This will minify and rename to pressure.min.js
+//   .pipe(uglify())
+//   .pipe(rename({ extname: '.min.js' }))
+//   .pipe(gulp.dest(DESTINATION_FOLDER));
+// });
 
 gulp.task('watch', function() {
   gulp.watch('src/*', ['openpixel']);

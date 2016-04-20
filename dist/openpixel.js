@@ -107,9 +107,10 @@ var Cookie = {
 
 
   // set a cookie that expires in 10 minutes to throttle analytics requests from that page
-  throttle: function throttle(name) {
-    this.set(name, 1, 10, window.location.pathname);
-  },
+  // throttle(name){
+  //   this.set(name, 1, 10, window.location.pathname);
+  // },
+
   setUtms: function setUtms() {
     var utmArray = ['utm_source', 'utm_medium', 'utm_term', 'utm_content', 'utm_campaign'];
     var exists = false;
@@ -300,10 +301,10 @@ pixelFunc.process = function (method, value, optinal) {
   if (method == 'init') {
     Config.id = value;
   } else if (method == 'event') {
-    if (value == 'pageload' && !Config.pageLoadOnce && !Cookie.exists('pageload')) {
+    if (value == 'pageload' && !Config.pageLoadOnce) {
       Config.pageLoadOnce = true;
       // set 10 minutes page load cookie
-      Cookie.throttle('pageload');
+      // Cookie.throttle('pageload');
       new Pixel(value, pixelFunc.t, optinal);
     } else if (value != 'pageload' && value != 'pageclose') {
       new Pixel(value, now(), optinal);
@@ -317,10 +318,10 @@ for (var i = 0, l = pixelFunc.queue.length; i < l; i++) {
 }
 
 window.addEventListener('unload', function () {
-  if (!Config.pageCloseOnce && !Cookie.exists('pageclose')) {
+  if (!Config.pageCloseOnce) {
     Config.pageCloseOnce = true;
     // set 10 minutes page close cookie
-    Cookie.throttle('pageclose');
+    // Cookie.throttle('pageclose');
     new Pixel('pageclose', now(), function () {
       // if a link was clicked in the last 5 seconds that goes to an extenal host, pass it through as event data
       if (isset(Config.externalHost) && now() - Config.externalHost.time < 5 * 1000) {
@@ -340,4 +341,4 @@ window.onload = function () {
     }.bind(aTags[i]);
   }
 };
-}(window, document, window["opix"], "opix", "http://stu.ngrok.io/pixel.gif", 1));
+}(window, document, window["opix"], "opix", "https://tracker.dockwa.com/pixel.gif", 1));

@@ -35,9 +35,9 @@ var Cookie = {
   },
 
   // set a cookie that expires in 10 minutes to throttle analytics requests from that page
-  throttle(name){
-    this.set(name, 1, 10, window.location.pathname);
-  },
+  // throttle(name){
+  //   this.set(name, 1, 10, window.location.pathname);
+  // },
 
   setUtms(){
     var utmArray = ['utm_source','utm_medium','utm_term','utm_content','utm_campaign'];
