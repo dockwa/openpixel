@@ -1,3 +1,5 @@
+Open pixel is a javascript library for building tracking pixels. Use it like a white labeled google analytics when building your own tracking solutions.
+
 | Key          | Value               | Details                                                         |
 | ------------ | ------------------- | --------------------------------------------------------------- |
 | id           | SJO12ZW             | id for the app/website you are tracking                         |
