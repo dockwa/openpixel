@@ -2,9 +2,11 @@
 ![test](https://raw.githubusercontent.com/dockwa/openpixel/dockwa/by-dockwa.png)
 
 ##About
-Openpixel is a library for building a custom javascript implimentation of a tracking pixel. Openpixel uses the latest technologies available with fall back support for older browsers. For example is the browser supports web beacons, openpixel will send a web beacon, if it doesn't support them it will inject a 1x1 gif into the page with tracking infromation as part of the images get request.
+Openpixel is a customizable JavaScript library for building tracking pixels. Openpixel uses the latest technologies available with fall back support for older browsers. For example is the browser supports web beacons, openpixel will send a web beacon, if it doesn't support them it will inject a 1x1 gif into the page with tracking infromation as part of the images get request.
 
-At Dockwa we build openpixel to solve our own problems of implimenting a tracking service that our marinas could put on their website to track traffic and attribution to the reservations coming through our platform.
+At Dockwa we built openpixel to solve our own problems of implimenting a tracking service that our marinas could put on their website to track traffic and attribution to the reservations coming through our platform.
+
+Openpixel handles the hard things about building a tracking library the will be go onto a clients website. It handles things like tracking unique users with cookies, tracking utm tags and persiting them to that users session, getting all of the infromation about the clients browser and device, and many other neat tricks for performant and accurate analytics.
 
 Openpixel has two parts, the snippet (`snippet.html`), and the core (`openpixel.min.js`).
 
@@ -17,9 +19,9 @@ The snippet handles things like making sure the core JavaScript will always be l
 The openpixel core (found at `src/openpixel.min.js`) is the JavaScript code that that the snippet loads asynchronously onto the clients website. The core is what does all of the heavy lifting. The core handles settings cookies, collecting utms, and of course sending beacons and tracking pixels of data when events are called.
 
 ###Events
-There are 2 main events, the `pageload` event which is sent as the main event when a page is loaded, you could consider it to be a "hit". The other event is `pageclose` and this is sent when the pages is closed or navigated away from. For example, to calculate how long a user viewed a page, you could calculate the difference between the timestamps on page load and page close and those timestamps will be accurate because they are triggered on the client side when the events actually happened.
+There are 2 automatic events, the `pageload` event which is sent as the main event when a page is loaded, you could consider it to be a "hit". The other event is `pageclose` and this is sent when the pages is closed or navigated away from. For example, to calculate how long a user viewed a page, you could calculate the difference between the timestamps on pageload and pageclose and those timestamps will be accurate because they are triggered on the client side when the events actually happened.
 
-Openpixel is flexible with events though, you can make calls to any events with any data you want to be sent with the beacon. Whenever an event is called, it sends a bacon just like the other beacons that have a timestamp and everything else. Here is an example of a custom event being called. Note: In this case we are using the `opix` function name but this will be custom based on your build of openpixel.
+Openpixel is flexible with events though, you can make calls to any events with any data you want to be sent with the beacon. Whenever an event is called, it sends a beacon just like the other beacons that have a timestamp and everything else. Here is an example of a custom event being called. Note: In this case we are using the `opix` function name but this will be custom based on your build of openpixel.
 
 ```
 opix("event","reservation requested")
@@ -31,11 +33,11 @@ opix("event","reservation requested", {someData: 1, otherData: "cool"})
 ```
 
 ##Setup
-Openpixel needs to be customized to for your needs before you can start using it. Luckily for you it is really easy to do.
+Openpixel needs to be customized for your needs before you can start using it. Luckily for you it is really easy to do.
 
 1. Make sure you have [node.js](https://nodejs.org/en/download/) installed on your computer.
 2. Install the dependencies for compiling openpixel via the command line with `npm install --dev`
-3. Update the variables at the top of the `gulpfile.js` for your custom configurations. Read the comments for explinations on what each configuration sets.
+3. Update the variables at the top of the `gulpfile.js` for your custom configurations. Each configuation has comments explaining it.
 4. Run gulp via the command like with `gulp run`.
 
 The core files and the snippet are located under the `src/` directory. If you are working on those files you can run `gulp watch` and that will watch for any files changed in the `src/` directory and rerun gulp to recompile these files and drop them in the `dist/` directory.
