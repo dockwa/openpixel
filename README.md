@@ -1,7 +1,7 @@
 # Openpixel
 [![Powered by Dockwa](https://raw.githubusercontent.com/dockwa/openpixel/dockwa/by-dockwa.png)](https://engineering.dockwa.com/)
 
-##About
+## About
 Openpixel is a customizable JavaScript library for building tracking pixels. Openpixel uses the latest technologies available with fall back support for older browsers. For example is the browser supports web beacons, openpixel will send a web beacon, if it doesn't support them it will inject a 1x1 gif into the page with tracking infromation as part of the images get request.
 
 At Dockwa we built openpixel to solve our own problems of implimenting a tracking service that our marinas could put on their website to track traffic and attribution to the reservations coming through our platform.
@@ -10,15 +10,15 @@ Openpixel handles the hard things about building a tracking library the will be 
 
 Openpixel has two parts, the snippet (`snippet.html`), and the core (`openpixel.min.js`).
 
-###Snippet
+### Snippet
 The openpixel snippet (found at `src/snippet.html`) is the HTML code that will be put onto any webpage that will be reporting analtyics. For Dockwa, our marina websites put this on every page of their website so that it would load the JS to execute beacons back to a tracking server. The snippet can be placed anywhere on the page and it will load the core openpixel JS asynchronously. To be accurate, the first part of the snippet gets the timestamp as soon as it is loaded, applies an ID (just like a google analytics ID, to be determined by you), and ques up a "pageload" event that will be sent as soon as the core JS has asynchronously loaded.
 
 The snippet handles things like making sure the core JavaScript will always be loaded async and is cache busted ever 24 hours so you can update the core and have customers using the updates withing the next day.
 
-###Core
+### Core
 The openpixel core (found at `src/openpixel.min.js`) is the JavaScript code that that the snippet loads asynchronously onto the clients website. The core is what does all of the heavy lifting. The core handles settings cookies, collecting utms, and of course sending beacons and tracking pixels of data when events are called.
 
-###Events
+### Events
 There are 2 automatic events, the `pageload` event which is sent as the main event when a page is loaded, you could consider it to be a "hit". The other event is `pageclose` and this is sent when the pages is closed or navigated away from. For example, to calculate how long a user viewed a page, you could calculate the difference between the timestamps on pageload and pageclose and those timestamps will be accurate because they are triggered on the client side when the events actually happened.
 
 Openpixel is flexible with events though, you can make calls to any events with any data you want to be sent with the beacon. Whenever an event is called, it sends a beacon just like the other beacons that have a timestamp and everything else. Here is an example of a custom event being called. Note: In this case we are using the `opix` function name but this will be custom based on your build of openpixel.
@@ -32,7 +32,7 @@ You can also pass a string or json as the third parameter to send other data wit
 opix("event","reservation requested", {someData: 1, otherData: "cool"})
 ```
 
-##Setup
+## Setup
 Openpixel needs to be customized for your needs before you can start using it. Luckily for you it is really easy to do.
 
 1. Make sure you have [node.js](https://nodejs.org/en/download/) installed on your computer.
@@ -45,7 +45,7 @@ The core files and the snippet are located under the `src/` directory. If you ar
 The `src/snippet.js` file is what is compiled into the `dist/snippet.html` file. All of the other files in the `src` directory are compiled into the `dist/openpixel.js` and the minified `dist/openpixel.min.js` files.
 
 
-##Tracking Data
+## Tracking Data
 Below is a table that has all of the keys, example values, and details on each value of information that is sent with each beacon on tracking pixel. A beacon might look something like this. Note: every key is always sent regarless of if it has a value so the structure will always be the same.
 
 ```
