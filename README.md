@@ -2,16 +2,16 @@
 [![Powered by Dockwa](https://raw.githubusercontent.com/dockwa/openpixel/dockwa/by-dockwa.png)](https://engineering.dockwa.com/)
 
 ##About
-Openpixel is a customizable JavaScript library for building tracking pixels. Openpixel uses the latest technologies available with fall back support for older browsers. For example is the browser supports web beacons, openpixel will send a web beacon, if it doesn't support them it will inject a 1x1 gif into the page with tracking infromation as part of the images get request.
+Openpixel is a customizable JavaScript library for building tracking pixels. Openpixel uses the latest technologies available with fall back support for older browsers. For example is the browser supports web beacons, openpixel will send a web beacon, if it doesn't support them it will inject a 1x1 gif into the page with tracking information as part of the images get request.
 
-At Dockwa we built openpixel to solve our own problems of implimenting a tracking service that our marinas could put on their website to track traffic and attribution to the reservations coming through our platform.
+At Dockwa we built openpixel to solve our own problems of implementing a tracking service that our marinas could put on their website to track traffic and attribution to the reservations coming through our platform.
 
-Openpixel handles the hard things about building a tracking library the will be go onto a clients website. It handles things like tracking unique users with cookies, tracking utm tags and persiting them to that users session, getting all of the infromation about the clients browser and device, and many other neat tricks for performant and accurate analytics.
+Openpixel handles the hard things about building a tracking library the will be go onto a clients website. It handles things like tracking unique users with cookies, tracking utm tags and persisting them to that users session, getting all of the information about the clients browser and device, and many other neat tricks for performant and accurate analytics.
 
 Openpixel has two parts, the snippet (`snippet.html`), and the core (`openpixel.min.js`).
 
 ###Snippet
-The openpixel snippet (found at `src/snippet.html`) is the HTML code that will be put onto any webpage that will be reporting analtyics. For Dockwa, our marina websites put this on every page of their website so that it would load the JS to execute beacons back to a tracking server. The snippet can be placed anywhere on the page and it will load the core openpixel JS asynchronously. To be accurate, the first part of the snippet gets the timestamp as soon as it is loaded, applies an ID (just like a google analytics ID, to be determined by you), and ques up a "pageload" event that will be sent as soon as the core JS has asynchronously loaded.
+The openpixel snippet (found at `src/snippet.html`) is the HTML code that will be put onto any webpage that will be reporting analytics. For Dockwa, our marina websites put this on every page of their website so that it would load the JS to execute beacons back to a tracking server. The snippet can be placed anywhere on the page and it will load the core openpixel JS asynchronously. To be accurate, the first part of the snippet gets the timestamp as soon as it is loaded, applies an ID (just like a google analytics ID, to be determined by you), and ques up a "pageload" event that will be sent as soon as the core JS has asynchronously loaded.
 
 The snippet handles things like making sure the core JavaScript will always be loaded async and is cache busted ever 24 hours so you can update the core and have customers using the updates withing the next day.
 
@@ -37,7 +37,7 @@ Openpixel needs to be customized for your needs before you can start using it. L
 
 1. Make sure you have [node.js](https://nodejs.org/en/download/) installed on your computer.
 2. Install the dependencies for compiling openpixel via the command line with `npm install --dev`
-3. Update the variables at the top of the `gulpfile.js` for your custom configurations. Each configuation has comments explaining it.
+3. Update the variables at the top of the `gulpfile.js` for your custom configurations. Each configuration has comments explaining it.
 4. Run gulp via the command like with `gulp run`.
 
 The core files and the snippet are located under the `src/` directory. If you are working on those files you can run `gulp watch` and that will watch for any files changed in the `src/` directory and rerun gulp to recompile these files and drop them in the `dist/` directory.
@@ -46,7 +46,7 @@ The `src/snippet.js` file is what is compiled into the `dist/snippet.html` file.
 
 
 ##Tracking Data
-Below is a table that has all of the keys, example values, and details on each value of information that is sent with each beacon on tracking pixel. A beacon might look something like this. Note: every key is always sent regarless of if it has a value so the structure will always be the same.
+Below is a table that has all of the keys, example values, and details on each value of information that is sent with each beacon on tracking pixel. A beacon might look something like this. Note: every key is always sent regardless of if it has a value so the structure will always be the same.
 
 ```
 https://tracker.example.com/pixel.gif?id=R29X8&uid=1-ovbam3yz-iolwx617&ev=pageload&ed=&v=1&dl=http://edgartownharbor.com/&rl=&ts=1464811823300&de=UTF-8&sr=1680x1050&vp=874x952&cd=24&dt=Edgartown%20Harbormaster&bn=Chrome%2050&md=false&ua=Mozilla/5.0%20(Macintosh;%20Intel%20Mac%20OS%20X%2010_11_5)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/50.0.2661.102%20Safari/537.36&utm_source=&utm_medium=&utm_term=&utm_content=&utm_campaign=
@@ -57,7 +57,7 @@ https://tracker.example.com/pixel.gif?id=R29X8&uid=1-ovbam3yz-iolwx617&ev=pagelo
 | id           | SJO12ZW             | id for the app/website you are tracking                         |
 | uid          | 1-cwq4oelu-in95g8xy | id of the user                                                  |
 | ev           | pageload            | the event that is being triggered                               |
-| ed           | {'somedata': 123}   | optinal event data that can be passed in, string or json string |
+| ed           | {'somedata': 123}   | optional event data that can be passed in, string or json string|
 | v            | 1                   | openpixel js version number                                     |
 | dl           | http://example.com/ | document location                                               |
 | rl           | http://google.com/  | referrer location                                               |
