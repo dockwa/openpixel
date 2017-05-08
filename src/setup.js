@@ -30,7 +30,7 @@ window.addEventListener('unload', function() {
     // set 10 minutes page close cookie
     // Cookie.throttle('pageclose');
     new Pixel('pageclose', now(), function(){
-      // if a link was clicked in the last 5 seconds that goes to an extenal host, pass it through as event data
+      // if a link was clicked in the last 5 seconds that goes to an external host, pass it through as event data
       if(isset(Config.externalHost) && (now() - Config.externalHost.time) < 5*1000){
         return Config.externalHost.link;
       }

@@ -1,11 +1,11 @@
 !function(window, document, script, http, opix, cacheTime, one, two, three) {
     // return if the setup has already occurred
-    // this is to prevent double loading openpixel.js if someone accidently had this more than once on a page
+    // this is to prevent double loading openpixel.js if someone accidentally had this more than once on a page
     if (window[opix]) return;
 
     // setup the queue to collect all of the calls to openpixel.js before it is loaded
     one = window[opix] = function() {
-      // if openpixel.js has loaded, pass the arugment through to it
+      // if openpixel.js has loaded, pass the argument through to it
       // if openpixel.js has not loaded yet, queue the calls in an array
       one.process ? one.process.apply(one, arguments) : one.queue.push(arguments)
     }
@@ -21,7 +21,7 @@
     // set the source of the script tag and cache bust every 24 hours
     two.src = http + '?t=' + (Math.ceil(new Date()/cacheTime)*cacheTime);
 
-    // get the first <script> that occures in the document
+    // get the first <script> that occurs in the document
     // if this block is the only <script> tag on the page it will get this block
     three = document.getElementsByTagName(script)[0];
     // insert the newly created script tag above the first <script> tag in the document

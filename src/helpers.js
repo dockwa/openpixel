@@ -1,4 +1,4 @@
-// check if a varaible is not undefined, null, or blank
+// check if a variable is not undefined, null, or blank
 var isset = function(variable){
   return typeof(variable) !== "undefined" && variable !== null && variable !== '';
 }
@@ -14,12 +14,12 @@ var guid = function() {
   }) + (1 * new Date()).toString(36);
 }
 
-// reduces all optinal data down to a string
+// reduces all optional data down to a string
 var optinalData = function(data) {
   if(isset(data) === false) {
     return '';
   } else if(typeof data === 'object') {
-    // runs optinalData again to reduce to string incase something else was returned
+    // runs optinalData again to reduce to string in case something else was returned
     return optinalData(JSON.stringify(data));
   } else if(typeof data === 'function') {
     // runs the function and calls optinalData again to reduce further if it isn't a string
