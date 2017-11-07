@@ -1,7 +1,7 @@
 {
   "name": "openpixel",
-  "version": "1.0.0",
-  "description": "Open Pixel is a JavaScript library for creating embedable and intelligent tracking pixels",
+  "version": "1.0.1",
+  "description": "Open Pixel is a JavaScript library for creating embeddable and intelligent tracking pixels",
   "main": "openpixel.min.js",
   "dependencies": {},
   "devDependencies": {

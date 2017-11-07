@@ -1,20 +1,19 @@
-// Open Pixel v1.0.0 | Published By Dockwa, Inc. | Created By Stuart Yamartino | MIT License
+// Open Pixel v1.0.0 | Published By Dockwa | Created By Stuart Yamartino | MIT License
 ;(function(window, document, pixelFunc, pixelFuncName, pixelEndpoint, versionNumber) {
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Config = {
   id: '',
   version: versionNumber
-};
 
-// check if a varaible is not undefined, null, or blank
-var isset = function isset(variable) {
+  // check if a variable is not undefined, null, or blank
+};var isset = function isset(variable) {
   return typeof variable !== "undefined" && variable !== null && variable !== '';
 };
 
@@ -30,12 +29,12 @@ var guid = function guid() {
   }) + (1 * new Date()).toString(36);
 };
 
-// reduces all optinal data down to a string
+// reduces all optional data down to a string
 var optinalData = function optinalData(data) {
   if (isset(data) === false) {
     return '';
   } else if ((typeof data === 'undefined' ? 'undefined' : _typeof(data)) === 'object') {
-    // runs optinalData again to reduce to string incase something else was returned
+    // runs optinalData again to reduce to string in case something else was returned
     return optinalData(JSON.stringify(data));
   } else if (typeof data === 'function') {
     // runs the function and calls optinalData again to reduce further if it isn't a string
@@ -77,7 +76,7 @@ var Cookie = {
     return '__' + pixelFuncName + '_';
   },
   set: function set(name, value, minutes) {
-    var path = arguments.length <= 3 || arguments[3] === undefined ? "/" : arguments[3];
+    var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "/";
 
     var expires = "";
     if (isset(minutes)) {
@@ -142,7 +141,6 @@ var Cookie = {
 
 var Url = {
   // http://stackoverflow.com/a/901144/1231563
-
   getParameterByName: function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -247,11 +245,11 @@ var Pixel = function () {
         }, // get the utm concent
         utm_campaign: function utm_campaign(key) {
           return Cookie.getUtm(key);
-        } };
+        } // get the utm campaign
+      };
     }
   }, {
     key: 'setParam',
-    // get the utm campaign
     value: function setParam(key, val) {
       if (isset(val)) {
         this.params.push(key + '=' + val);
@@ -270,8 +268,8 @@ var Pixel = function () {
       window.navigator.sendBeacon(this.getSourceUrl());
     }
   }, {
-    key: 'sendImg',
-    value: function sendImg() {
+    key: 'sendImage',
+    value: function sendImage() {
       this.img = document.createElement('img');
       this.img.src = this.getSourceUrl();
       this.img.style.display = 'none';
@@ -323,7 +321,7 @@ window.addEventListener('unload', function () {
     // set 10 minutes page close cookie
     // Cookie.throttle('pageclose');
     new Pixel('pageclose', now(), function () {
-      // if a link was clicked in the last 5 seconds that goes to an extenal host, pass it through as event data
+      // if a link was clicked in the last 5 seconds that goes to an external host, pass it through as event data
       if (isset(Config.externalHost) && now() - Config.externalHost.time < 5 * 1000) {
         return Config.externalHost.link;
       }

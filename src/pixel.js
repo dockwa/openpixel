@@ -59,7 +59,7 @@ class Pixel {
     window.navigator.sendBeacon(this.getSourceUrl());
   }
 
-  sendImg(){
+  sendImage(){
     this.img = document.createElement('img');
     this.img.src = this.getSourceUrl();
     this.img.style.display = 'none';
