@@ -41,10 +41,10 @@ window.addEventListener('unload', function() {
 window.onload = function() {
   var aTags = document.getElementsByTagName('a');
   for (var i = 0, l = aTags.length; i < l; i++) {
-    aTags[i].onclick = function(e) {
+    aTags[i].addEventListener('click', function(e) {
       if(Url.externalHost(this)){
         Config.externalHost = {link:this.href, time:now()};
       }
-    }.bind(aTags[i])
+    }.bind(aTags[i]));
   }
 }
