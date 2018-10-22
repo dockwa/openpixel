@@ -1,7 +1,7 @@
 // ---------- Configurations for your custom build of open pixel ---------- //
 
 // This is the header comment that will be included at the top of the "dist/openpixel.js" file
-var HEADER_COMMENT     = '// Open Pixel v1.0.0 | Published By Dockwa | Created By Stuart Yamartino | MIT License\n';
+var HEADER_COMMENT     = '// Open Pixel v1.0.2 | Published By Dockwa | Created By Stuart Yamartino | MIT License\n';
 
 // This is where the compiled snippet and openpixel.js files will be dropped
 var DESTINATION_FOLDER = './dist';
@@ -42,9 +42,7 @@ gulp.task('openpixel', function() {
     './src/setup.js',
   ])
   .pipe(concat('openpixel.js'))
-  .pipe(babel({
-      presets: ['es2015']
-  }))
+  .pipe(babel())
   .pipe(iife({
     useStrict: false,
     params: ['window', 'document', 'pixelFunc', 'pixelFuncName', 'pixelEndpoint', 'versionNumber'],

@@ -1,19 +1,22 @@
-// Open Pixel v1.0.0 | Published By Dockwa | Created By Stuart Yamartino | MIT License
+// Open Pixel v1.0.2 | Published By Dockwa | Created By Stuart Yamartino | MIT License
 ;(function(window, document, pixelFunc, pixelFuncName, pixelEndpoint, versionNumber) {
-'use strict';
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+"use strict";
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 var Config = {
   id: '',
-  version: versionNumber
+  version: versionNumber // check if a variable is not undefined, null, or blank
 
-  // check if a variable is not undefined, null, or blank
-};var isset = function isset(variable) {
+};
+
+var isset = function isset(variable) {
   return typeof variable !== "undefined" && variable !== null && variable !== '';
 };
 
@@ -27,13 +30,13 @@ var guid = function guid() {
         v = c == 'x' ? r : r & 0x3 | 0x8;
     return v.toString(36);
   }) + (1 * new Date()).toString(36);
-};
+}; // reduces all optional data down to a string
 
-// reduces all optional data down to a string
+
 var optinalData = function optinalData(data) {
   if (isset(data) === false) {
     return '';
-  } else if ((typeof data === 'undefined' ? 'undefined' : _typeof(data)) === 'object') {
+  } else if (_typeof(data) === 'object') {
     // runs optinalData again to reduce to string in case something else was returned
     return optinalData(JSON.stringify(data));
   } else if (typeof data === 'function') {
@@ -50,14 +53,17 @@ var Browser = {
     var ua = navigator.userAgent,
         tem,
         M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+
     if (/trident/i.test(M[1])) {
       tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
       return 'IE ' + (tem[1] || '');
     }
+
     if (M[1] === 'Chrome') {
       tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
       if (tem != null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
     }
+
     M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
     if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
     return M.join(' ');
@@ -68,33 +74,38 @@ var Browser = {
   userAgent: function userAgent() {
     return window.navigator.userAgent;
   }
-};
+}; //http://www.w3schools.com/js/js_cookies.asp
 
-//http://www.w3schools.com/js/js_cookies.asp
 var Cookie = {
   prefix: function prefix() {
     return '__' + pixelFuncName + '_';
   },
   set: function set(name, value, minutes) {
     var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "/";
-
     var expires = "";
+
     if (isset(minutes)) {
       var date = new Date();
       date.setTime(date.getTime() + minutes * 60 * 1000);
       expires = "; expires=" + date.toGMTString();
     }
+
     document.cookie = this.prefix() + name + "=" + value + expires + "; path=" + path;
   },
   get: function get(name) {
     var name = this.prefix() + name + "=";
     var ca = document.cookie.split(';');
+
     for (var i = 0; i < ca.length; i++) {
       var c = ca[i];
+
       while (c.charAt(0) == ' ') {
         c = c.substring(1);
-      }if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+      }
+
+      if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
     }
+
     return;
   },
   delete: function _delete(name) {
@@ -103,31 +114,33 @@ var Cookie = {
   exists: function exists(name) {
     return isset(this.get(name));
   },
-
-
   // set a cookie that expires in 10 minutes to throttle analytics requests from that page
   // throttle(name){
   //   this.set(name, 1, 10, window.location.pathname);
   // },
-
   setUtms: function setUtms() {
     var utmArray = ['utm_source', 'utm_medium', 'utm_term', 'utm_content', 'utm_campaign'];
     var exists = false;
+
     for (var i = 0, l = utmArray.length; i < l; i++) {
       if (isset(Url.getParameterByName(utmArray[i]))) {
         exists = true;
         break;
       }
     }
+
     if (exists) {
       var val,
           save = {};
+
       for (var i = 0, l = utmArray.length; i < l; i++) {
         val = Url.getParameterByName(utmArray[i]);
+
         if (isset(val)) {
           save[utmArray[i]] = val;
         }
       }
+
       this.set('utm', JSON.stringify(save));
     }
   },
@@ -138,7 +151,6 @@ var Cookie = {
     }
   }
 };
-
 var Url = {
   // http://stackoverflow.com/a/901144/1231563
   getParameterByName: function getParameterByName(name, url) {
@@ -155,7 +167,9 @@ var Url = {
   }
 };
 
-var Pixel = function () {
+var Pixel =
+/*#__PURE__*/
+function () {
   function Pixel(event, timestamp, optinal) {
     _classCallCheck(this, Pixel);
 
@@ -168,9 +182,10 @@ var Pixel = function () {
   }
 
   _createClass(Pixel, [{
-    key: 'buildParams',
+    key: "buildParams",
     value: function buildParams() {
       var attr = this.getAttribute();
+
       for (var index in attr) {
         if (attr.hasOwnProperty(index)) {
           this.setParam(index, attr[index](index));
@@ -178,78 +193,99 @@ var Pixel = function () {
       }
     }
   }, {
-    key: 'getAttribute',
+    key: "getAttribute",
     value: function getAttribute() {
       var _this = this;
 
       return {
         id: function id() {
           return Config.id;
-        }, // website Id
+        },
+        // website Id
         uid: function uid() {
           return Cookie.get('uid');
-        }, // user Id
+        },
+        // user Id
         ev: function ev() {
           return _this.event;
-        }, // event being triggered
+        },
+        // event being triggered
         ed: function ed() {
           return _this.optinal;
-        }, // any event data to pass along
+        },
+        // any event data to pass along
         v: function v() {
           return Config.version;
-        }, // openpixel.js version
+        },
+        // openpixel.js version
         dl: function dl() {
           return window.location.href;
-        }, // document location
+        },
+        // document location
         rl: function rl() {
           return document.referrer;
-        }, // referrer location
+        },
+        // referrer location
         ts: function ts() {
           return _this.timestamp;
-        }, // timestamp when event was triggered
+        },
+        // timestamp when event was triggered
         de: function de() {
           return document.characterSet;
-        }, // document encoding
+        },
+        // document encoding
         sr: function sr() {
           return window.screen.width + 'x' + window.screen.height;
-        }, // screen resolution
+        },
+        // screen resolution
         vp: function vp() {
           return window.innerWidth + 'x' + window.innerHeight;
-        }, // viewport size
+        },
+        // viewport size
         cd: function cd() {
           return window.screen.colorDepth;
-        }, // color depth
+        },
+        // color depth
         dt: function dt() {
           return document.title;
-        }, // document title
+        },
+        // document title
         bn: function bn() {
           return Browser.nameAndVersion();
-        }, // browser name and version number
+        },
+        // browser name and version number
         md: function md() {
           return Browser.isMobile();
-        }, // is a mobile device?
+        },
+        // is a mobile device?
         ua: function ua() {
           return Browser.userAgent();
-        }, // user agent
+        },
+        // user agent
         utm_source: function utm_source(key) {
           return Cookie.getUtm(key);
-        }, // get the utm source
+        },
+        // get the utm source
         utm_medium: function utm_medium(key) {
           return Cookie.getUtm(key);
-        }, // get the utm medium
+        },
+        // get the utm medium
         utm_term: function utm_term(key) {
           return Cookie.getUtm(key);
-        }, // get the utm term
+        },
+        // get the utm term
         utm_content: function utm_content(key) {
           return Cookie.getUtm(key);
-        }, // get the utm concent
+        },
+        // get the utm concent
         utm_campaign: function utm_campaign(key) {
           return Cookie.getUtm(key);
         } // get the utm campaign
+
       };
     }
   }, {
-    key: 'setParam',
+    key: "setParam",
     value: function setParam(key, val) {
       if (isset(val)) {
         this.params.push(key + '=' + val);
@@ -258,17 +294,17 @@ var Pixel = function () {
       }
     }
   }, {
-    key: 'send',
+    key: "send",
     value: function send() {
       window.navigator.sendBeacon ? this.sendBeacon() : this.sendImage();
     }
   }, {
-    key: 'sendBeacon',
+    key: "sendBeacon",
     value: function sendBeacon() {
       window.navigator.sendBeacon(this.getSourceUrl());
     }
   }, {
-    key: 'sendImage',
+    key: "sendImage",
     value: function sendImage() {
       this.img = document.createElement('img');
       this.img.src = this.getSourceUrl();
@@ -278,48 +314,45 @@ var Pixel = function () {
       document.getElementsByTagName('body')[0].appendChild(this.img);
     }
   }, {
-    key: 'getSourceUrl',
+    key: "getSourceUrl",
     value: function getSourceUrl() {
       return pixelEndpoint + '?' + encodeURI(this.params.join('&'));
     }
   }]);
 
   return Pixel;
-}();
-
-// update the cookie if it exists, if it doesn't, create a new one, lasting 2 years
+}(); // update the cookie if it exists, if it doesn't, create a new one, lasting 2 years
 
 
-Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2 * 365 * 24 * 60) : Cookie.set('uid', guid(), 2 * 365 * 24 * 60);
-// save any utms through as session cookies
-Cookie.setUtms();
+Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2 * 365 * 24 * 60) : Cookie.set('uid', guid(), 2 * 365 * 24 * 60); // save any utms through as session cookies
 
-// process the queue and future incoming commands
+Cookie.setUtms(); // process the queue and future incoming commands
+
 pixelFunc.process = function (method, value, optinal) {
   if (method == 'init') {
     Config.id = value;
   } else if (method == 'event') {
     if (value == 'pageload' && !Config.pageLoadOnce) {
-      Config.pageLoadOnce = true;
-      // set 10 minutes page load cookie
+      Config.pageLoadOnce = true; // set 10 minutes page load cookie
       // Cookie.throttle('pageload');
+
       new Pixel(value, pixelFunc.t, optinal);
     } else if (value != 'pageload' && value != 'pageclose') {
       new Pixel(value, now(), optinal);
     }
   }
-};
+}; // run the queued calls from the snippet to be processed
 
-// run the queued calls from the snippet to be processed
+
 for (var i = 0, l = pixelFunc.queue.length; i < l; i++) {
   pixelFunc.process.apply(pixelFunc, pixelFunc.queue[i]);
 }
 
 window.addEventListener('unload', function () {
   if (!Config.pageCloseOnce) {
-    Config.pageCloseOnce = true;
-    // set 10 minutes page close cookie
+    Config.pageCloseOnce = true; // set 10 minutes page close cookie
     // Cookie.throttle('pageclose');
+
     new Pixel('pageclose', now(), function () {
       // if a link was clicked in the last 5 seconds that goes to an external host, pass it through as event data
       if (isset(Config.externalHost) && now() - Config.externalHost.time < 5 * 1000) {
@@ -331,10 +364,14 @@ window.addEventListener('unload', function () {
 
 window.onload = function () {
   var aTags = document.getElementsByTagName('a');
+
   for (var i = 0, l = aTags.length; i < l; i++) {
     aTags[i].addEventListener('click', function (e) {
       if (Url.externalHost(this)) {
-        Config.externalHost = { link: this.href, time: now() };
+        Config.externalHost = {
+          link: this.href,
+          time: now()
+        };
       }
     }.bind(aTags[i]));
   }

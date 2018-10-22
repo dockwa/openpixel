@@ -1,21 +1,26 @@
 {
   "name": "openpixel",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Open Pixel is a JavaScript library for creating embeddable and intelligent tracking pixels",
   "main": "openpixel.min.js",
   "dependencies": {},
   "devDependencies": {
-    "babel-preset-es2015": "^6.1.2",
-    "gulp": "^3.9.0",
-    "gulp-babel": "^6.1.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-iife": "^0.2.4",
-    "gulp-inject-string": "^1.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^1.4.2"
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-iife": "^0.3.0",
+    "gulp-inject-string": "^1.1.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-uglify": "^3.0.1",
+    "natives": "^1.1.6"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "./node_modules/.bin/gulp",
+    "dist": "gulp run",
+    "watch": "gulp watch"
   },
   "repository": {
     "type": "git",
