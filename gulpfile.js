@@ -1,22 +1,22 @@
 // ---------- Configurations for your custom build of open pixel ---------- //
 
 // This is the header comment that will be included at the top of the "dist/openpixel.js" file
-var HEADER_COMMENT     = '// Open Pixel v1.0.2 | Published By Dockwa | Created By Stuart Yamartino | MIT License\n';
+var HEADER_COMMENT     = process.env.OPIX_HEADER_COMMENT || '// Open Pixel v1.0.2 | Published By Dockwa | Created By Stuart Yamartino | MIT License\n';
 
 // This is where the compiled snippet and openpixel.js files will be dropped
-var DESTINATION_FOLDER = './dist';
+var DESTINATION_FOLDER = process.env.OPIX_DESTINATION_FOLDER || './dist';
 
 // The name of the global function and the cookie prefix that will be included in the snippet and is the client to fire off custom events
-var PIXEL_FUNC_NAME    = 'opix';
+var PIXEL_FUNC_NAME    = process.env.OPIX_PIXEL_FUNC_NAME || 'opix';
 
 // The remote URL of the pixel.gif file that will be pinged by the browser to send tracking information
-var PIXEL_ENDPOINT     = 'https://tracker.example.com/pixel.gif';
+var PIXEL_ENDPOINT     = process.env.OPIX_PIXEL_ENDPOINT || 'https://tracker.example.com/pixel.gif';
 
 // The core openpixel.min.js file that the snippet will loaded asynchronously into the browser
-var JS_ENDPOINT        = 'https://static.example.com/v1/openpixel.js';
+var JS_ENDPOINT        = process.env.OPIX_JS_ENDPOINT || 'https://static.example.com/v1/openpixel.js';
 
 // The current version of your openpixel configuration
-var VERSION            = '1';
+var VERSION            = process.env.OPIX_VERSION || '1';
 
 // ------------------------------------------------------------------------//
 
@@ -24,8 +24,8 @@ var VERSION            = '1';
 // include plug-ins
 var gulp   = require('gulp');
 var concat = require('gulp-concat');
-var iife   = require("gulp-iife");
-var inject = require('gulp-inject-string')
+var iife   = require('gulp-iife');
+var inject = require('gulp-inject-string');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var babel  = require('gulp-babel');
@@ -80,4 +80,4 @@ gulp.task('watch', function() {
 // run all tasks once
 gulp.task('run', function() {
   gulp.start('openpixel', 'snippet');
-})
+});
