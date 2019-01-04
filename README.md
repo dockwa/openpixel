@@ -47,8 +47,18 @@ The `src/snippet.js` file is what is compiled into the `dist/snippet.html` file.
 ## Continuous integration
 You may also need to build different versions of openpixel for different environments with custom options.
 Next environment variables can be used to configure the build:
+
 ```
-OPIX_DESTINATION_FOLDER, OPIX_PIXEL_ENDPOINT, OPIX_JS_ENDPOINT, OPIX_VERSIONOPIX_PIXEL_FUNC_NAME
+OPIX_DESTINATION_FOLDER, OPIX_PIXEL_ENDPOINT, OPIX_JS_ENDPOINT, OPIX_VERSIONOPIX_PIXEL_FUNC_NAME, OPIX_VERSION
+```
+
+So you can install openpixel as npm module
+```npm i -ED openpixel``` 
+
+and use it from your bash or js code
+
+```
+OPIX_DESTINATION_FOLDER=/home/ubuntu/app/dist OPIX_PIXEL_ENDPOINT=http://localhost:8000/pixel.gif.gifOPIX_JS_ENDPOINT=http://localhost:800/pixel_script.js, OPIX_PIXEL_FUNC_NAME=track-function, OPIX_VERSION=1 npx gulp --gulpfile ./node_modules/openpixel/gulpfile.js run
 ```
 
 ## Tracking Data
