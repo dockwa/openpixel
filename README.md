@@ -44,6 +44,13 @@ The core files and the snippet are located under the `src/` directory. If you ar
 
 The `src/snippet.js` file is what is compiled into the `dist/snippet.html` file. All of the other files in the `src` directory are compiled into the `dist/openpixel.js` and the minified `dist/openpixel.min.js` files.
 
+## Continuous integration
+You may also need to build different versions of openpixel for different environments with custom options.
+Next environment variables can be used to configure the build:
+```
+OPIX_DESTINATION_FOLDER, OPIX_PIXEL_ENDPOINT, OPIX_JS_ENDPOINT, OPIX_VERSIONOPIX_PIXEL_FUNC_NAME
+```
+
 ## Tracking Data
 Below is a table that has all of the keys, example values, and details on each value of information that is sent with each beacon on tracking pixel. A beacon might look something like this. Note: every key is always sent regardless of if it has a value so the structure will always be the same.
 
