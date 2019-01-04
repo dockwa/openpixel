@@ -49,7 +49,7 @@ You may also need to build different versions of openpixel for different environ
 Next environment variables can be used to configure the build:
 
 ```
-OPIX_DESTINATION_FOLDER, OPIX_PIXEL_ENDPOINT, OPIX_JS_ENDPOINT, OPIX_VERSIONOPIX_PIXEL_FUNC_NAME, OPIX_VERSION
+OPIX_DESTINATION_FOLDER, OPIX_PIXEL_ENDPOINT, OPIX_JS_ENDPOINT, OPIX_VERSIONOPIX_PIXEL_FUNC_NAME, OPIX_VERSION, OPIX_HEADER_COMMENT
 ```
 
 So you can install openpixel as npm module
@@ -58,7 +58,7 @@ So you can install openpixel as npm module
 and use it from your bash or js code
 
 ```
-OPIX_DESTINATION_FOLDER=/home/ubuntu/app/dist OPIX_PIXEL_ENDPOINT=http://localhost:8000/pixel.gif.gifOPIX_JS_ENDPOINT=http://localhost:800/pixel_script.js, OPIX_PIXEL_FUNC_NAME=track-function, OPIX_VERSION=1 npx gulp --gulpfile ./node_modules/openpixel/gulpfile.js run
+OPIX_DESTINATION_FOLDER=/home/ubuntu/app/dist OPIX_PIXEL_ENDPOINT=http://localhost:8000/pixel.gif.gifOPIX_JS_ENDPOINT=http://localhost:800/pixel_script.js, OPIX_PIXEL_FUNC_NAME=track-function, OPIX_VERSION=1 OPIX_HEADER_COMMENT="My custom tracker" npx gulp --gulpfile ./node_modules/openpixel/gulpfile.js run
 ```
 
 ## Tracking Data
