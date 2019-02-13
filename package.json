@@ -1,6 +1,6 @@
 {
   "name": "openpixel",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Open Pixel is a JavaScript library for creating embeddable and intelligent tracking pixels",
   "main": "openpixel.min.js",
   "dependencies": {
@@ -18,7 +18,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "./node_modules/.bin/gulp",
-    "dist": "gulp run",
+    "dist": "gulp default",
     "watch": "gulp watch"
   },
   "repository": {

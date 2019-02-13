@@ -78,6 +78,6 @@ gulp.task('watch', function() {
 });
 
 // run all tasks once
-gulp.task('run', function() {
+gulp.task('default', function() {
   gulp.start('openpixel', 'snippet');
 });
