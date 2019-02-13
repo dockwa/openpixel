@@ -1,6 +1,6 @@
 // check if a variable is not undefined, null, or blank
 var isset = function(variable) {
-  return typeof(variable) !== "undefined" && variable !== null && variable !== '';
+  return typeof(variable) !== 'undefined' && variable !== null && variable !== '';
 }
 
 var now = function() {
