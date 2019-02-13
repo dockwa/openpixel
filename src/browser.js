@@ -1,13 +1,13 @@
 var Browser = {
-  nameAndVersion(){
+  nameAndVersion() {
     // http://stackoverflow.com/questions/5916900/how-can-you-detect-the-version-of-a-browser
     var ua= navigator.userAgent, tem,
     M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-    if(/trident/i.test(M[1])){
+    if (/trident/i.test(M[1])) {
       tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
       return 'IE '+(tem[1] || '');
     }
-    if(M[1]=== 'Chrome'){
+    if (M[1]=== 'Chrome') {
       tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
       if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
     }
@@ -16,11 +16,11 @@ var Browser = {
     return M.join(' ');
   },
 
-  isMobile(){
+  isMobile() {
     return 'ontouchstart' in document;
   },
 
-  userAgent(){
+  userAgent() {
     return window.navigator.userAgent;
   }
 }

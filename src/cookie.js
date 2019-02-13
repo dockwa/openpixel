@@ -1,7 +1,7 @@
 //http://www.w3schools.com/js/js_cookies.asp
 var Cookie = {
 
-  prefix(){
+  prefix() {
     return  '__' + pixelFuncName + '_';
   },
 
@@ -18,7 +18,7 @@ var Cookie = {
   get(name) {
     var name = this.prefix() + name + "=";
     var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
+    for (var i=0; i<ca.length; i++) {
         var c = ca[i];
         while (c.charAt(0)==' ') c = c.substring(1);
         if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
@@ -26,11 +26,11 @@ var Cookie = {
     return;
   },
 
-  delete(name){
+  delete(name) {
     this.set(name,"",-100);
   },
 
-  exists(name){
+  exists(name) {
     return isset(this.get(name));
   },
 
@@ -39,20 +39,20 @@ var Cookie = {
   //   this.set(name, 1, 10, window.location.pathname);
   // },
 
-  setUtms(){
+  setUtms() {
     var utmArray = ['utm_source','utm_medium','utm_term','utm_content','utm_campaign'];
     var exists = false;
-    for(var i = 0, l = utmArray.length; i < l; i++){
-      if( isset(Url.getParameterByName(utmArray[i])) ){
+    for (var i = 0, l = utmArray.length; i < l; i++) {
+      if (isset(Url.getParameterByName(utmArray[i]))) {
         exists = true;
         break;
       }
     }
-    if(exists){
+    if (exists) {
       var val, save = {};
-      for(var i = 0, l = utmArray.length; i < l; i++){
+      for (var i = 0, l = utmArray.length; i < l; i++) {
         val = Url.getParameterByName(utmArray[i]);
-        if(isset(val)){
+        if (isset(val)) {
           save[utmArray[i]] = val;
         }
       }
@@ -60,11 +60,10 @@ var Cookie = {
     }
   },
 
-  getUtm(name){
-    if(this.exists('utm')){
+  getUtm(name) {
+    if (this.exists('utm')) {
       var utms = JSON.parse(this.get('utm'));
       return name in utms ? utms[name] : "";
     }
   }
-
 }

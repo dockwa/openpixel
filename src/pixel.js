@@ -1,5 +1,5 @@
 class Pixel {
-  constructor(event, timestamp, optinal){
+  constructor(event, timestamp, optinal) {
     this.params = [];
     this.event = event;
     this.timestamp = timestamp;
@@ -8,16 +8,16 @@ class Pixel {
     this.send();
   }
 
-  buildParams(){
+  buildParams() {
     var attr = this.getAttribute();
-    for(var index in attr) {
+    for (var index in attr) {
       if (attr.hasOwnProperty(index)) {
         this.setParam(index, attr[index](index));
       }
     }
   }
 
-  getAttribute(){
+  getAttribute() {
     return {
       id:           ()=>{return Config.id}, // website Id
       uid:          ()=>{return Cookie.get('uid')}, // user Id
@@ -43,23 +43,23 @@ class Pixel {
     }
   }
 
-  setParam(key, val){
-    if(isset(val)){
+  setParam(key, val) {
+    if (isset(val)) {
       this.params.push(key+'='+val);
     } else {
       this.params.push(key+'=');
     }
   }
 
-  send(){
+  send() {
     window.navigator.sendBeacon ? this.sendBeacon() : this.sendImage();
   }
 
-  sendBeacon(){
+  sendBeacon() {
     window.navigator.sendBeacon(this.getSourceUrl());
   }
 
-  sendImage(){
+  sendImage() {
     this.img = document.createElement('img');
     this.img.src = this.getSourceUrl();
     this.img.style.display = 'none';
@@ -68,7 +68,7 @@ class Pixel {
     document.getElementsByTagName('body')[0].appendChild(this.img);
   }
 
-  getSourceUrl(){
+  getSourceUrl() {
     return pixelEndpoint + '?' + encodeURI(this.params.join('&'));
   }
 }
