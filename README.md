@@ -1,4 +1,7 @@
 # Openpixel
+<a href="https://www.npmjs.com/package/openpixel"><img src="https://img.shields.io/npm/v/openpixel.svg" /></a>
+<a href="https://www.npmjs.com/package/openpixel"><img src="https://img.shields.io/npm/dt/openpixel.svg" /></a>
+
 [![Powered by Dockwa](https://raw.githubusercontent.com/dockwa/openpixel/dockwa/by-dockwa.png)](https://engineering.dockwa.com/)
 
 ## About
