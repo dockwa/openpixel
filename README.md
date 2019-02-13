@@ -9,7 +9,7 @@ Openpixel is a customizable JavaScript library for building tracking pixels. Ope
 
 At Dockwa we built openpixel to solve our own problems of implementing a tracking service that our marinas could put on their website to track traffic and attribution to the reservations coming through our platform.
 
-Openpixel handles the hard things about building a tracking library the will be go onto a clients website. It handles things like tracking unique users with cookies, tracking utm tags and persisting them to that users session, getting all of the information about the clients browser and device, and many other neat tricks for performant and accurate analytics.
+Openpixel handles the hard things about building a tracking library so you don't have to. It handles things like tracking unique users with cookies, tracking utm tags and persisting them to that users session, getting all of the information about the clients browser and device, and many other neat tricks for performant and accurate analytics.
 
 Openpixel has two parts, the snippet (`snippet.html`), and the core (`openpixel.min.js`).
 
@@ -35,31 +35,27 @@ You can also pass a string or json as the third parameter to send other data wit
 opix("event","reservation requested", {someData: 1, otherData: "cool"})
 ```
 
-## Setup
+## Setup and Customize
 Openpixel needs to be customized for your needs before you can start using it. Luckily for you it is really easy to do.
 
 1. Make sure you have [node.js](https://nodejs.org/en/download/) installed on your computer.
-2. Install the dependencies for compiling openpixel via the command line with `npm install`
-3. Update the variables at the top of the `gulpfile.js` for your custom configurations. Each configuration has comments explaining it.
-4. Run gulp via the command `npm run dist`.
+2. Install openpixel `npm i openpixel`
+3. Install the dependencies for compiling openpixel via the command line with `npm install`
+4. Update the variables at the top of the `gulpfile.js` for your custom configurations. Each configuration has comments explaining it.
+5. Run gulp via the command `npm run gulp`.
 
-The core files and the snippet are located under the `src/` directory. If you are working on those files you can run `gulp watch` and that will watch for any files changed in the `src/` directory and rerun gulp to recompile these files and drop them in the `dist/` directory.
+The core files and the snippet are located under the `src/` directory. If you are working on those files you can run `npm run watch` and that will watch for any files changed in the `src/` directory and rerun gulp to recompile these files and drop them in the `dist/` directory.
 
 The `src/snippet.js` file is what is compiled into the `dist/snippet.html` file. All of the other files in the `src` directory are compiled into the `dist/openpixel.js` and the minified `dist/openpixel.min.js` files.
 
 ## Continuous integration
 You may also need to build different versions of openpixel for different environments with custom options.
-Next environment variables can be used to configure the build:
-
+Environment variables can be used to configure the build:
 ```
 OPIX_DESTINATION_FOLDER, OPIX_PIXEL_ENDPOINT, OPIX_JS_ENDPOINT, OPIX_VERSIONOPIX_PIXEL_FUNC_NAME, OPIX_VERSION, OPIX_HEADER_COMMENT
 ```
 
-So you can install openpixel as npm module
-```npm i -ED openpixel``` 
-
-and use it from your bash or js code
-
+You can install openpixel as an npm module `npm i -ED openpixel` and use it from your bash or js code.
 ```
 OPIX_DESTINATION_FOLDER=/home/ubuntu/app/dist OPIX_PIXEL_ENDPOINT=http://localhost:8000/pixel.gif OPIX_JS_ENDPOINT=http://localhost:800/pixel_script.js  OPIX_PIXEL_FUNC_NAME=track-function OPIX_VERSION=1 OPIX_HEADER_COMMENT="// My custom tracker\n" npx gulp --gulpfile ./node_modules/openpixel/gulpfile.js run
 ```
