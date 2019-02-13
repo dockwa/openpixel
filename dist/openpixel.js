@@ -17,7 +17,7 @@ var Config = {
 };
 
 var isset = function isset(variable) {
-  return typeof variable !== "undefined" && variable !== null && variable !== '';
+  return typeof variable !== 'undefined' && variable !== null && variable !== '';
 };
 
 var now = function now() {
@@ -288,9 +288,9 @@ function () {
     key: "setParam",
     value: function setParam(key, val) {
       if (isset(val)) {
-        this.params.push(key + '=' + val);
+        this.params.push("".concat(key, "=").concat(encodeURIComponent(val)));
       } else {
-        this.params.push(key + '=');
+        this.params.push("".concat(key, "="));
       }
     }
   }, {
@@ -316,7 +316,7 @@ function () {
   }, {
     key: "getSourceUrl",
     value: function getSourceUrl() {
-      return pixelEndpoint + '?' + encodeURI(this.params.join('&'));
+      return "".concat(pixelEndpoint, "?").concat(this.params.join('&'));
     }
   }]);
 

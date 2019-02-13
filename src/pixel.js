@@ -9,7 +9,7 @@ class Pixel {
   }
 
   buildParams() {
-    var attr = this.getAttribute();
+    const attr = this.getAttribute();
     for (var index in attr) {
       if (attr.hasOwnProperty(index)) {
         this.setParam(index, attr[index](index));
@@ -45,9 +45,9 @@ class Pixel {
 
   setParam(key, val) {
     if (isset(val)) {
-      this.params.push(key+'='+val);
+      this.params.push(`${key}=${encodeURIComponent(val)}`);
     } else {
-      this.params.push(key+'=');
+      this.params.push(`${key}=`);
     }
   }
 
@@ -69,6 +69,6 @@ class Pixel {
   }
 
   getSourceUrl() {
-    return pixelEndpoint + '?' + encodeURI(this.params.join('&'));
+    return `${pixelEndpoint}?${this.params.join('&')}`;
   }
 }
