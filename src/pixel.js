@@ -35,6 +35,7 @@ class Pixel {
       bn:           ()=>{return Browser.nameAndVersion()}, // browser name and version number
       md:           ()=>{return Browser.isMobile()}, // is a mobile device?
       ua:           ()=>{return Browser.userAgent()}, // user agent
+      tz:           ()=>{return (new Date()).getTimezoneOffset()}, // timezone
       utm_source:   (key)=>{return Cookie.getUtm(key)}, // get the utm source
       utm_medium:   (key)=>{return Cookie.getUtm(key)}, // get the utm medium
       utm_term:     (key)=>{return Cookie.getUtm(key)}, // get the utm term
