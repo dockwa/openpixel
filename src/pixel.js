@@ -19,28 +19,28 @@ class Pixel {
 
   getAttribute() {
     return {
-      id:           ()=>{return Config.id}, // website Id
-      uid:          ()=>{return Cookie.get('uid')}, // user Id
-      ev:           ()=>{return this.event}, // event being triggered
-      ed:           ()=>{return this.optinal}, // any event data to pass along
-      v:            ()=>{return Config.version}, // openpixel.js version
-      dl:           ()=>{return window.location.href}, // document location
-      rl:           ()=>{return document.referrer}, // referrer location
-      ts:           ()=>{return this.timestamp}, // timestamp when event was triggered
-      de:           ()=>{return document.characterSet}, // document encoding
-      sr:           ()=>{return window.screen.width + 'x' + window.screen.height}, // screen resolution
-      vp:           ()=>{return window.innerWidth + 'x' + window.innerHeight}, // viewport size
-      cd:           ()=>{return window.screen.colorDepth}, // color depth
-      dt:           ()=>{return document.title}, // document title
-      bn:           ()=>{return Browser.nameAndVersion()}, // browser name and version number
-      md:           ()=>{return Browser.isMobile()}, // is a mobile device?
-      ua:           ()=>{return Browser.userAgent()}, // user agent
-      tz:           ()=>{return (new Date()).getTimezoneOffset()}, // timezone
-      utm_source:   (key)=>{return Cookie.getUtm(key)}, // get the utm source
-      utm_medium:   (key)=>{return Cookie.getUtm(key)}, // get the utm medium
-      utm_term:     (key)=>{return Cookie.getUtm(key)}, // get the utm term
-      utm_content:  (key)=>{return Cookie.getUtm(key)}, // get the utm concent
-      utm_campaign: (key)=>{return Cookie.getUtm(key)}, // get the utm campaign
+      id:           () => Config.id, // website Id
+      uid:          () => Cookie.get('uid'), // user Id
+      ev:           () => this.event, // event being triggered
+      ed:           () => this.optinal, // any event data to pass along
+      v:            () => Config.version, // openpixel.js version
+      dl:           () => window.location.href, // document location
+      rl:           () => document.referrer, // referrer location
+      ts:           () => this.timestamp, // timestamp when event was triggered
+      de:           () => document.characterSet, // document encoding
+      sr:           () => window.screen.width + 'x' + window.screen.height, // screen resolution
+      vp:           () => window.innerWidth + 'x' + window.innerHeight, // viewport size
+      cd:           () => window.screen.colorDepth, // color depth
+      dt:           () => document.title, // document title
+      bn:           () => Browser.nameAndVersion(), // browser name and version number
+      md:           () => Browser.isMobile(), // is a mobile device?
+      ua:           () => Browser.userAgent(), // user agent
+      tz:           () => (new Date()).getTimezoneOffset(), // timezone
+      utm_source:   key => Cookie.getUtm(key), // get the utm source
+      utm_medium:   key => Cookie.getUtm(key), // get the utm medium
+      utm_term:     key => Cookie.getUtm(key), // get the utm term
+      utm_content:  key => Cookie.getUtm(key), // get the utm concent
+      utm_campaign: key => Cookie.getUtm(key), // get the utm campaign
     }
   }
 

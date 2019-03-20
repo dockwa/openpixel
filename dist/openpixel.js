@@ -1,4 +1,4 @@
-// Open Pixel v1.0.2 | Published By Dockwa | Created By Stuart Yamartino | MIT License
+// Open Pixel v1.0.5 | Published By Dockwa | Created By Stuart Yamartino | MIT License
 ;(function(window, document, pixelFunc, pixelFuncName, pixelEndpoint, versionNumber) {
 "use strict";
 
@@ -262,6 +262,10 @@ function () {
           return Browser.userAgent();
         },
         // user agent
+        tz: function tz() {
+          return new Date().getTimezoneOffset();
+        },
+        // timezone
         utm_source: function utm_source(key) {
           return Cookie.getUtm(key);
         },

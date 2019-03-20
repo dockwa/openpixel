@@ -27,12 +27,13 @@ There are 2 automatic events, the `pageload` event which is sent as the main eve
 Openpixel is flexible with events though, you can make calls to any events with any data you want to be sent with the beacon. Whenever an event is called, it sends a beacon just like the other beacons that have a timestamp and everything else. Here is an example of a custom event being called. Note: In this case we are using the `opix` function name but this will be custom based on your build of openpixel.
 
 ```
-opix("event","reservation requested")
+opix('event', 'reservation_requested')
 ```
 You can also pass a string or json as the third parameter to send other data with the event.
 
 ```
-opix("event","reservation requested", {someData: 1, otherData: "cool"})
+opix('event', 'reservation_requested', {someData: 1, otherData: 'cool'})
+opix('event', 'reservation_requested', {someData: 1, otherData: 'cool'})
 ```
 
 ## Setup and Customize
@@ -85,6 +86,7 @@ https://tracker.example.com/pixel.gif?id=R29X8&uid=1-ovbam3yz-iolwx617&ev=pagelo
 | bn           | Chrome 50           | browser name                                                    |
 | md           | false               | mobile device                                                   |
 | ua           | _full user agent_   | user agent                                                      |
+| tz           | 240                 | timezone offset (minutes away from utc)                         |
 | utm_source   |                     | Campaign Source                                                 |
 | utm_medium   |                     | Campaign Medium                                                 |
 | utm_term     |                     | Campaign Term                                                   |
