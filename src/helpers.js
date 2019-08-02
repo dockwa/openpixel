@@ -15,15 +15,15 @@ var guid = function() {
 }
 
 // reduces all optional data down to a string
-var optinalData = function(data) {
+var optionalData = function(data) {
   if (isset(data) === false) {
     return '';
   } else if (typeof data === 'object') {
-    // runs optinalData again to reduce to string in case something else was returned
-    return optinalData(JSON.stringify(data));
+    // runs optionalData again to reduce to string in case something else was returned
+    return optionalData(JSON.stringify(data));
   } else if (typeof data === 'function') {
-    // runs the function and calls optinalData again to reduce further if it isn't a string
-    return optinalData(data());
+    // runs the function and calls optionalData again to reduce further if it isn't a string
+    return optionalData(data());
   } else {
     return String(data);
   }
