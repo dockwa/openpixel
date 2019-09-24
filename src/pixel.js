@@ -1,9 +1,9 @@
 class Pixel {
-  constructor(event, timestamp, optinal) {
+  constructor(event, timestamp, optional) {
     this.params = [];
     this.event = event;
     this.timestamp = timestamp;
-    this.optinal = optinalData(optinal);
+    this.optional = optionalData(optional);
     this.buildParams();
     this.send();
   }
@@ -22,7 +22,7 @@ class Pixel {
       id:           () => Config.id, // website Id
       uid:          () => Cookie.get('uid'), // user Id
       ev:           () => this.event, // event being triggered
-      ed:           () => this.optinal, // any event data to pass along
+      ed:           () => this.optional, // any event data to pass along
       v:            () => Config.version, // openpixel.js version
       dl:           () => window.location.href, // document location
       rl:           () => document.referrer, // referrer location

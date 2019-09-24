@@ -4,7 +4,7 @@ Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2*365*24*60) : Cooki
 Cookie.setUtms();
 
 // process the queue and future incoming commands
-pixelFunc.process = function(method, value, optinal) {
+pixelFunc.process = function(method, value, optional) {
   if (method == 'init') {
     Config.id = value;
   } else if(method == 'event') {
@@ -12,9 +12,9 @@ pixelFunc.process = function(method, value, optinal) {
       Config.pageLoadOnce = true;
       // set 10 minutes page load cookie
       // Cookie.throttle('pageload');
-      new Pixel(value, pixelFunc.t, optinal);
+      new Pixel(value, pixelFunc.t, optional);
     } else if(value != 'pageload' && value != 'pageclose'){
-      new Pixel(value, now(), optinal);
+      new Pixel(value, now(), optional);
     }
   }
 }

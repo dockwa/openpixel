@@ -33,15 +33,15 @@ var guid = function guid() {
 }; // reduces all optional data down to a string
 
 
-var optinalData = function optinalData(data) {
+var optionalData = function optionalData(data) {
   if (isset(data) === false) {
     return '';
   } else if (_typeof(data) === 'object') {
-    // runs optinalData again to reduce to string in case something else was returned
-    return optinalData(JSON.stringify(data));
+    // runs optionalData again to reduce to string in case something else was returned
+    return optionalData(JSON.stringify(data));
   } else if (typeof data === 'function') {
-    // runs the function and calls optinalData again to reduce further if it isn't a string
-    return optinalData(data());
+    // runs the function and calls optionalData again to reduce further if it isn't a string
+    return optionalData(data());
   } else {
     return String(data);
   }
@@ -170,13 +170,13 @@ var Url = {
 var Pixel =
 /*#__PURE__*/
 function () {
-  function Pixel(event, timestamp, optinal) {
+  function Pixel(event, timestamp, optional) {
     _classCallCheck(this, Pixel);
 
     this.params = [];
     this.event = event;
     this.timestamp = timestamp;
-    this.optinal = optinalData(optinal);
+    this.optional = optionalData(optional);
     this.buildParams();
     this.send();
   }
@@ -211,7 +211,7 @@ function () {
         },
         // event being triggered
         ed: function ed() {
-          return _this.optinal;
+          return _this.optional;
         },
         // any event data to pass along
         v: function v() {
@@ -332,7 +332,7 @@ Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2 * 365 * 24 * 60) :
 
 Cookie.setUtms(); // process the queue and future incoming commands
 
-pixelFunc.process = function (method, value, optinal) {
+pixelFunc.process = function (method, value, optional) {
   if (method == 'init') {
     Config.id = value;
   } else if (method == 'event') {
@@ -340,9 +340,9 @@ pixelFunc.process = function (method, value, optinal) {
       Config.pageLoadOnce = true; // set 10 minutes page load cookie
       // Cookie.throttle('pageload');
 
-      new Pixel(value, pixelFunc.t, optinal);
+      new Pixel(value, pixelFunc.t, optional);
     } else if (value != 'pageload' && value != 'pageclose') {
-      new Pixel(value, now(), optinal);
+      new Pixel(value, now(), optional);
     }
   }
 }; // run the queued calls from the snippet to be processed
