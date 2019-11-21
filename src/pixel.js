@@ -39,7 +39,7 @@ class Pixel {
       utm_source:   key => Cookie.getUtm(key), // get the utm source
       utm_medium:   key => Cookie.getUtm(key), // get the utm medium
       utm_term:     key => Cookie.getUtm(key), // get the utm term
-      utm_content:  key => Cookie.getUtm(key), // get the utm concent
+      utm_content:  key => Cookie.getUtm(key), // get the utm content
       utm_campaign: key => Cookie.getUtm(key), // get the utm campaign
     }
   }
