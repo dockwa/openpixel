@@ -1,4 +1,4 @@
-// Open Pixel v1.0.5 | Published By Dockwa | Created By Stuart Yamartino | MIT License
+// Open Pixel v1.1.0 | Published By Dockwa | Created By Stuart Yamartino | MIT License
 ;(function(window, document, pixelFunc, pixelFuncName, pixelEndpoint, versionNumber) {
 "use strict";
 
@@ -12,9 +12,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 var Config = {
   id: '',
-  version: versionNumber // check if a variable is not undefined, null, or blank
-
-};
+  version: versionNumber
+}; // check if a variable is not undefined, null, or blank
 
 var isset = function isset(variable) {
   return typeof variable !== 'undefined' && variable !== null && variable !== '';
@@ -90,7 +89,7 @@ var Cookie = {
       expires = "; expires=" + date.toGMTString();
     }
 
-    document.cookie = this.prefix() + name + "=" + value + expires + "; path=" + path;
+    document.cookie = this.prefix() + name + "=" + value + expires + "; path=" + path + "; SameSite=Lax";
   },
   get: function get(name) {
     var name = this.prefix() + name + "=";
@@ -108,7 +107,7 @@ var Cookie = {
 
     return;
   },
-  delete: function _delete(name) {
+  "delete": function _delete(name) {
     this.set(name, "", -100);
   },
   exists: function exists(name) {
@@ -281,7 +280,7 @@ function () {
         utm_content: function utm_content(key) {
           return Cookie.getUtm(key);
         },
-        // get the utm concent
+        // get the utm content
         utm_campaign: function utm_campaign(key) {
           return Cookie.getUtm(key);
         } // get the utm campaign

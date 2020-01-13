@@ -1,7 +1,7 @@
 // ---------- Configurations for your custom build of open pixel ---------- //
 
 // This is the header comment that will be included at the top of the "dist/openpixel.js" file
-var HEADER_COMMENT     = process.env.OPIX_HEADER_COMMENT || '// Open Pixel v1.0.5 | Published By Dockwa | Created By Stuart Yamartino | MIT License\n';
+var HEADER_COMMENT     = process.env.OPIX_HEADER_COMMENT || '// Open Pixel v1.1.0 | Published By Dockwa | Created By Stuart Yamartino | MIT License\n';
 
 // This is where the compiled snippet and openpixel.js files will be dropped
 var DESTINATION_FOLDER = process.env.OPIX_DESTINATION_FOLDER || './dist';
@@ -31,8 +31,8 @@ var uglify = require('gulp-uglify');
 var babel  = require('gulp-babel');
 
 // ---- Compile openpixel.js and openpixel.min.js files ---- //
-gulp.task('openpixel', function() {
-  gulp.src([
+function openpixel() {
+  return gulp.src([
     './src/config.js',
     './src/helpers.js',
     './src/browser.js',
@@ -56,12 +56,11 @@ gulp.task('openpixel', function() {
   .pipe(inject.prepend(HEADER_COMMENT))
   .pipe(rename({ extname: '.min.js' }))
   .pipe(gulp.dest(DESTINATION_FOLDER));
-});
-
+}
 
 // ---- Compile snippet.html file ---- //
-gulp.task('snippet', function() {
-  gulp.src('./src/snippet.js')
+function snippet() {
+  return gulp.src('./src/snippet.js')
   .pipe(inject.replace('js_url', JS_ENDPOINT))
   .pipe(inject.replace('opix_func', PIXEL_FUNC_NAME))
   // This will minify and rename to pressure.min.js
@@ -70,14 +69,18 @@ gulp.task('snippet', function() {
   .pipe(inject.append('\n</script>\n<!-- End Open Pixel Snippet -->'))
   .pipe(rename({ extname: '.html' }))
   .pipe(gulp.dest(DESTINATION_FOLDER));
-});
+}
 
 // watch files and run gulp
-gulp.task('watch', function() {
-  gulp.watch('src/*', ['openpixel', 'snippet']);
-});
+function watch() {
+  gulp.watch('src/*', openpixel);
+  gulp.watch('src/*', snippet);
+}
 
 // run all tasks once
-gulp.task('default', function() {
-  gulp.start('openpixel', 'snippet');
-});
+var build = gulp.parallel(openpixel, snippet);
+
+exports.openpixel = openpixel;
+exports.snippet = snippet;
+exports.watch = watch;
+exports.build = build;
