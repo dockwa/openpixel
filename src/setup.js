@@ -24,7 +24,7 @@ for (var i = 0, l = pixelFunc.queue.length; i < l; i++) {
   pixelFunc.process.apply(pixelFunc, pixelFunc.queue[i]);
 }
 
-window.addEventListener('unload', function() {
+window.addEventListener('beforeunload', function() {
   if (!Config.pageCloseOnce) {
     Config.pageCloseOnce = true;
     // set 10 minutes page close cookie
