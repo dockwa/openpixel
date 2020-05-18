@@ -1,5 +1,5 @@
 // update the cookie if it exists, if it doesn't, create a new one, lasting 2 years
-Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2*365*24*60) : Cookie.set('uid', guid(), 2*365*24*60);
+Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2*365*24*60) : Cookie.set('uid', Helpers.guid(), 2*365*24*60);
 // save any utms through as session cookies
 Cookie.setUtms();
 
@@ -14,7 +14,7 @@ pixelFunc.process = function(method, value, optional) {
       // Cookie.throttle('pageload');
       new Pixel(value, pixelFunc.t, optional);
     } else if(value != 'pageload' && value != 'pageclose'){
-      new Pixel(value, now(), optional);
+      new Pixel(value, Helpers.now(), optional);
     }
   }
 }
@@ -29,9 +29,9 @@ window.addEventListener('beforeunload', function() {
     Config.pageCloseOnce = true;
     // set 10 minutes page close cookie
     // Cookie.throttle('pageclose');
-    new Pixel('pageclose', now(), function(){
+    new Pixel('pageclose', Helpers.now(), function(){
       // if a link was clicked in the last 5 seconds that goes to an external host, pass it through as event data
-      if (isset(Config.externalHost) && (now() - Config.externalHost.time) < 5*1000) {
+      if (Helpers.isPresent(Config.externalHost) && (Helpers.now() - Config.externalHost.time) < 5*1000) {
         return Config.externalHost.link;
       }
     });
@@ -43,7 +43,7 @@ window.onload = function() {
   for (var i = 0, l = aTags.length; i < l; i++) {
     aTags[i].addEventListener('click', function(e) {
       if (Url.externalHost(this)) {
-        Config.externalHost = {link:this.href, time:now()};
+        Config.externalHost = {link:this.href, time:Helpers.now()};
       }
     }.bind(aTags[i]));
   }

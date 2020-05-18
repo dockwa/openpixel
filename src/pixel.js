@@ -3,7 +3,7 @@ class Pixel {
     this.params = [];
     this.event = event;
     this.timestamp = timestamp;
-    this.optional = optionalData(optional);
+    this.optional = Helpers.optionalData(optional);
     this.buildParams();
     this.send();
   }
@@ -45,7 +45,7 @@ class Pixel {
   }
 
   setParam(key, val) {
-    if (isset(val)) {
+    if (Helpers.isPresent(val)) {
       this.params.push(`${key}=${encodeURIComponent(val)}`);
     } else {
       this.params.push(`${key}=`);

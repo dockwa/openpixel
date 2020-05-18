@@ -1,21 +1,20 @@
 //http://www.w3schools.com/js/js_cookies.asp
-var Cookie = {
-
-  prefix() {
+class Cookie {
+  static prefix() {
     return  '__' + pixelFuncName + '_';
-  },
+  }
 
-  set(name, value, minutes, path = "/") {
+  static set(name, value, minutes, path = "/") {
     var expires = "";
-    if (isset(minutes)) {
+    if (Helpers.isPresent(minutes)) {
       var date = new Date();
       date.setTime(date.getTime()+(minutes*60*1000));
       expires = "; expires="+date.toGMTString();
     }
     document.cookie = this.prefix() + name + "=" + value + expires + "; path=" + path +"; SameSite=Lax";
-  },
+  }
 
-  get(name) {
+  static get(name) {
     var name = this.prefix() + name + "=";
     var ca = document.cookie.split(';');
     for (var i=0; i<ca.length; i++) {
@@ -24,26 +23,26 @@ var Cookie = {
         if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
     }
     return;
-  },
+  }
 
-  delete(name) {
+  static delete(name) {
     this.set(name,"",-100);
-  },
+  }
 
-  exists(name) {
-    return isset(this.get(name));
-  },
+  static exists(name) {
+    return Helpers.isPresent(this.get(name));
+  }
 
   // set a cookie that expires in 10 minutes to throttle analytics requests from that page
   // throttle(name){
   //   this.set(name, 1, 10, window.location.pathname);
   // },
 
-  setUtms() {
+  static setUtms() {
     var utmArray = ['utm_source','utm_medium','utm_term','utm_content','utm_campaign'];
     var exists = false;
     for (var i = 0, l = utmArray.length; i < l; i++) {
-      if (isset(Url.getParameterByName(utmArray[i]))) {
+      if (Helpers.isPresent(Url.getParameterByName(utmArray[i]))) {
         exists = true;
         break;
       }
@@ -52,15 +51,15 @@ var Cookie = {
       var val, save = {};
       for (var i = 0, l = utmArray.length; i < l; i++) {
         val = Url.getParameterByName(utmArray[i]);
-        if (isset(val)) {
+        if (Helpers.isPresent(val)) {
           save[utmArray[i]] = val;
         }
       }
       this.set('utm', JSON.stringify(save));
     }
-  },
+  }
 
-  getUtm(name) {
+  static getUtm(name) {
     if (this.exists('utm')) {
       var utms = JSON.parse(this.get('utm'));
       return name in utms ? utms[name] : "";
