@@ -6,7 +6,7 @@ class Cookie {
 
   static set(name, value, minutes, path = "/") {
     var expires = "";
-    if (Helpers.isPresent(minutes)) {
+    if (Helper.isPresent(minutes)) {
       var date = new Date();
       date.setTime(date.getTime()+(minutes*60*1000));
       expires = "; expires="+date.toGMTString();
@@ -30,7 +30,7 @@ class Cookie {
   }
 
   static exists(name) {
-    return Helpers.isPresent(this.get(name));
+    return Helper.isPresent(this.get(name));
   }
 
   // set a cookie that expires in 10 minutes to throttle analytics requests from that page
@@ -42,7 +42,7 @@ class Cookie {
     var utmArray = ['utm_source','utm_medium','utm_term','utm_content','utm_campaign'];
     var exists = false;
     for (var i = 0, l = utmArray.length; i < l; i++) {
-      if (Helpers.isPresent(Url.getParameterByName(utmArray[i]))) {
+      if (Helper.isPresent(Url.getParameterByName(utmArray[i]))) {
         exists = true;
         break;
       }
@@ -51,7 +51,7 @@ class Cookie {
       var val, save = {};
       for (var i = 0, l = utmArray.length; i < l; i++) {
         val = Url.getParameterByName(utmArray[i]);
-        if (Helpers.isPresent(val)) {
+        if (Helper.isPresent(val)) {
           save[utmArray[i]] = val;
         }
       }

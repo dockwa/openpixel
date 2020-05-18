@@ -1,4 +1,4 @@
-class Helpers {
+class Helper {
   static isPresent(variable) {
     return typeof(variable) !== 'undefined' && variable !== null && variable !== '';
   }
@@ -16,14 +16,14 @@ class Helpers {
 
   // reduces all optional data down to a string
   static optionalData(data) {
-    if (Helpers.isPresent(data) === false) {
+    if (Helper.isPresent(data) === false) {
       return '';
     } else if (typeof data === 'object') {
-      // runs Helpers.optionalData again to reduce to string in case something else was returned
-      return Helpers.optionalData(JSON.stringify(data));
+      // runs Helper.optionalData again to reduce to string in case something else was returned
+      return Helper.optionalData(JSON.stringify(data));
     } else if (typeof data === 'function') {
-      // runs the function and calls Helpers.optionalData again to reduce further if it isn't a string
-      return Helpers.optionalData(data());
+      // runs the function and calls Helper.optionalData again to reduce further if it isn't a string
+      return Helper.optionalData(data());
     } else {
       return String(data);
     }

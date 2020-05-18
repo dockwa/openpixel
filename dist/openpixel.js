@@ -15,12 +15,12 @@ var Config = {
   version: versionNumber
 };
 
-var Helpers = /*#__PURE__*/function () {
-  function Helpers() {
-    _classCallCheck(this, Helpers);
+var Helper = /*#__PURE__*/function () {
+  function Helper() {
+    _classCallCheck(this, Helper);
   }
 
-  _createClass(Helpers, null, [{
+  _createClass(Helper, null, [{
     key: "isPresent",
     value: function isPresent(variable) {
       return typeof variable !== 'undefined' && variable !== null && variable !== '';
@@ -43,21 +43,21 @@ var Helpers = /*#__PURE__*/function () {
   }, {
     key: "optionalData",
     value: function optionalData(data) {
-      if (Helpers.isPresent(data) === false) {
+      if (Helper.isPresent(data) === false) {
         return '';
       } else if (_typeof(data) === 'object') {
-        // runs Helpers.optionalData again to reduce to string in case something else was returned
-        return Helpers.optionalData(JSON.stringify(data));
+        // runs Helper.optionalData again to reduce to string in case something else was returned
+        return Helper.optionalData(JSON.stringify(data));
       } else if (typeof data === 'function') {
-        // runs the function and calls Helpers.optionalData again to reduce further if it isn't a string
-        return Helpers.optionalData(data());
+        // runs the function and calls Helper.optionalData again to reduce further if it isn't a string
+        return Helper.optionalData(data());
       } else {
         return String(data);
       }
     }
   }]);
 
-  return Helpers;
+  return Helper;
 }();
 
 var Browser = /*#__PURE__*/function () {
@@ -119,7 +119,7 @@ var Cookie = /*#__PURE__*/function () {
       var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "/";
       var expires = "";
 
-      if (Helpers.isPresent(minutes)) {
+      if (Helper.isPresent(minutes)) {
         var date = new Date();
         date.setTime(date.getTime() + minutes * 60 * 1000);
         expires = "; expires=" + date.toGMTString();
@@ -153,7 +153,7 @@ var Cookie = /*#__PURE__*/function () {
   }, {
     key: "exists",
     value: function exists(name) {
-      return Helpers.isPresent(this.get(name));
+      return Helper.isPresent(this.get(name));
     } // set a cookie that expires in 10 minutes to throttle analytics requests from that page
     // throttle(name){
     //   this.set(name, 1, 10, window.location.pathname);
@@ -166,7 +166,7 @@ var Cookie = /*#__PURE__*/function () {
       var exists = false;
 
       for (var i = 0, l = utmArray.length; i < l; i++) {
-        if (Helpers.isPresent(Url.getParameterByName(utmArray[i]))) {
+        if (Helper.isPresent(Url.getParameterByName(utmArray[i]))) {
           exists = true;
           break;
         }
@@ -179,7 +179,7 @@ var Cookie = /*#__PURE__*/function () {
         for (var i = 0, l = utmArray.length; i < l; i++) {
           val = Url.getParameterByName(utmArray[i]);
 
-          if (Helpers.isPresent(val)) {
+          if (Helper.isPresent(val)) {
             save[utmArray[i]] = val;
           }
         }
@@ -234,7 +234,7 @@ var Pixel = /*#__PURE__*/function () {
     this.params = [];
     this.event = event;
     this.timestamp = timestamp;
-    this.optional = Helpers.optionalData(optional);
+    this.optional = Helper.optionalData(optional);
     this.buildParams();
     this.send();
   }
@@ -349,7 +349,7 @@ var Pixel = /*#__PURE__*/function () {
   }, {
     key: "setParam",
     value: function setParam(key, val) {
-      if (Helpers.isPresent(val)) {
+      if (Helper.isPresent(val)) {
         this.params.push("".concat(key, "=").concat(encodeURIComponent(val)));
       } else {
         this.params.push("".concat(key, "="));
@@ -386,7 +386,7 @@ var Pixel = /*#__PURE__*/function () {
 }(); // update the cookie if it exists, if it doesn't, create a new one, lasting 2 years
 
 
-Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2 * 365 * 24 * 60) : Cookie.set('uid', Helpers.guid(), 2 * 365 * 24 * 60); // save any utms through as session cookies
+Cookie.exists('uid') ? Cookie.set('uid', Cookie.get('uid'), 2 * 365 * 24 * 60) : Cookie.set('uid', Helper.guid(), 2 * 365 * 24 * 60); // save any utms through as session cookies
 
 Cookie.setUtms(); // process the queue and future incoming commands
 
@@ -400,7 +400,7 @@ pixelFunc.process = function (method, value, optional) {
 
       new Pixel(value, pixelFunc.t, optional);
     } else if (value != 'pageload' && value != 'pageclose') {
-      new Pixel(value, Helpers.now(), optional);
+      new Pixel(value, Helper.now(), optional);
     }
   }
 }; // run the queued calls from the snippet to be processed
@@ -415,9 +415,9 @@ window.addEventListener('beforeunload', function () {
     Config.pageCloseOnce = true; // set 10 minutes page close cookie
     // Cookie.throttle('pageclose');
 
-    new Pixel('pageclose', Helpers.now(), function () {
+    new Pixel('pageclose', Helper.now(), function () {
       // if a link was clicked in the last 5 seconds that goes to an external host, pass it through as event data
-      if (Helpers.isPresent(Config.externalHost) && Helpers.now() - Config.externalHost.time < 5 * 1000) {
+      if (Helper.isPresent(Config.externalHost) && Helper.now() - Config.externalHost.time < 5 * 1000) {
         return Config.externalHost.link;
       }
     });
@@ -432,7 +432,7 @@ window.onload = function () {
       if (Url.externalHost(this)) {
         Config.externalHost = {
           link: this.href,
-          time: Helpers.now()
+          time: Helper.now()
         };
       }
     }.bind(aTags[i]));

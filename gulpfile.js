@@ -34,7 +34,7 @@ var babel  = require('gulp-babel');
 function openpixel() {
   return gulp.src([
     './src/config.js',
-    './src/helpers.js',
+    './src/helper.js',
     './src/browser.js',
     './src/cookie.js',
     './src/url.js',
