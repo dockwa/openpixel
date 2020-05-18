@@ -63,7 +63,7 @@ function snippet() {
   return gulp.src('./src/snippet.js')
   .pipe(inject.replace('js_url', JS_ENDPOINT))
   .pipe(inject.replace('opix_func', PIXEL_FUNC_NAME))
-  // This will minify and rename to pressure.min.js
+  // This will minify and rename to snippet.html
   .pipe(uglify())
   .pipe(inject.prepend('<!-- Start Open Pixel Snippet -->\n<script>\n'))
   .pipe(inject.append('\n</script>\n<!-- End Open Pixel Snippet -->'))
