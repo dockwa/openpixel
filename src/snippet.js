@@ -27,6 +27,6 @@
     // insert the newly created script tag above the first <script> tag in the document
     // this ensures openpixel.js is loaded asynchronously
     three.parentNode.insertBefore(two, three)
-}(window, document, 'script', 'js_url', 'opix_func', 24*60*60*1000);
-opix_func("init","ID-XXXXXXXX");
-opix_func("event","pageload");
+}(window, document, 'script', 'JS_URL', 'OPIX_FUNC', 24*60*60*1000);
+OPIX_FUNC("init","ID-XXXXXXXX");
+OPIX_FUNC("event","pageload");

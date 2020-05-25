@@ -1,21 +1,20 @@
-//http://www.w3schools.com/js/js_cookies.asp
 class Cookie {
   static prefix() {
-    return  '__' + pixelFuncName + '_';
+    return  `__${pixelFuncName}_`;
   }
 
-  static set(name, value, minutes, path = "/") {
-    var expires = "";
+  static set(name, value, minutes, path = '/') {
+    var expires = '';
     if (Helper.isPresent(minutes)) {
       var date = new Date();
-      date.setTime(date.getTime()+(minutes*60*1000));
-      expires = "; expires="+date.toGMTString();
+      date.setTime(date.getTime() + (minutes * 60 * 1000));
+      expires = `expires=${date.toGMTString()}; `;
     }
-    document.cookie = this.prefix() + name + "=" + value + expires + "; path=" + path +"; SameSite=Lax";
+    document.cookie = `${this.prefix()}${name}=${value}; ${expires}path=${path}; SameSite=Lax`;
   }
 
   static get(name) {
-    var name = this.prefix() + name + "=";
+    var name = `${this.prefix()}${name}=`;
     var ca = document.cookie.split(';');
     for (var i=0; i<ca.length; i++) {
         var c = ca[i];
@@ -26,20 +25,15 @@ class Cookie {
   }
 
   static delete(name) {
-    this.set(name,"",-100);
+    this.set(name,'',-100);
   }
 
   static exists(name) {
     return Helper.isPresent(this.get(name));
   }
 
-  // set a cookie that expires in 10 minutes to throttle analytics requests from that page
-  // throttle(name){
-  //   this.set(name, 1, 10, window.location.pathname);
-  // },
-
   static setUtms() {
-    var utmArray = ['utm_source','utm_medium','utm_term','utm_content','utm_campaign'];
+    var utmArray = ['utm_source', 'utm_medium', 'utm_term', 'utm_content', 'utm_campaign'];
     var exists = false;
     for (var i = 0, l = utmArray.length; i < l; i++) {
       if (Helper.isPresent(Url.getParameterByName(utmArray[i]))) {
@@ -62,7 +56,7 @@ class Cookie {
   static getUtm(name) {
     if (this.exists('utm')) {
       var utms = JSON.parse(this.get('utm'));
-      return name in utms ? utms[name] : "";
+      return name in utms ? utms[name] : '';
     }
   }
 }
