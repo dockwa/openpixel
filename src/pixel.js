@@ -3,7 +3,7 @@ class Pixel {
     this.params = [];
     this.event = event;
     this.timestamp = timestamp;
-    this.optional = optionalData(optional);
+    this.optional = Helper.optionalData(optional);
     this.buildParams();
     this.send();
   }
@@ -41,11 +41,12 @@ class Pixel {
       utm_term:     key => Cookie.getUtm(key), // get the utm term
       utm_content:  key => Cookie.getUtm(key), // get the utm content
       utm_campaign: key => Cookie.getUtm(key), // get the utm campaign
+      ...Config.params
     }
   }
 
   setParam(key, val) {
-    if (isset(val)) {
+    if (Helper.isPresent(val)) {
       this.params.push(`${key}=${encodeURIComponent(val)}`);
     } else {
       this.params.push(`${key}=`);
