@@ -35,6 +35,11 @@ You can also pass a string or json as the third parameter to send other data wit
 opix('event', 'reservation_requested', {someData: 1, otherData: 'cool'})
 opix('event', 'reservation_requested', {someData: 1, otherData: 'cool'})
 ```
+You can also add an attribute to any HTML element that will automatically fire the event on click.
+
+```
+<button data-opix-event="special-button-click">Some Special Button</button>
+```
 
 ## Setup and Customize
 Openpixel needs to be customized for your needs before you can start using it. Luckily for you it is really easy to do.
