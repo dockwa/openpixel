@@ -32,8 +32,8 @@ var isSafari = typeof safari === 'object' && safari.pushNotification;
 // pagehide event is more reliable but less broad than unload event for mobile and modern browsers
 var pageCloseEvent = 'onpageshow' in self && !isSafari ? 'pagehide' : 'unload';
 
-if (!Config.pageCloseOnce) {
-  window.addEventListener(pageCloseEvent, function() {
+window.addEventListener(pageCloseEvent, function() {
+  if (!Config.pageCloseOnce) {
     Config.pageCloseOnce = true;
     new Pixel('pageclose', Helper.now(), function() {
       // if a link was clicked in the last 5 seconds that goes to an external host, pass it through as event data
@@ -41,8 +41,8 @@ if (!Config.pageCloseOnce) {
         return Config.externalHost.link;
       }
     });
-  });
-}
+  }
+});
 
 window.onload = function() {
   var aTags = document.getElementsByTagName('a');
