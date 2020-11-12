@@ -30,7 +30,7 @@ var isSafari = typeof safari === 'object' && safari.pushNotification;
 
 // IE9-10 do not support the pagehide event, so we fall back to unload
 // pagehide event is more reliable but less broad than unload event for mobile and modern browsers
-var pageCloseEvent = 'onpageshow' in self && !is_safari ? 'pagehide' : 'unload';
+var pageCloseEvent = 'onpageshow' in self && !isSafari ? 'pagehide' : 'unload';
 
 if (!Config.pageCloseOnce) {
   window.addEventListener(pageCloseEvent, function() {
