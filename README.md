@@ -48,7 +48,7 @@ Openpixel needs to be customized for your needs before you can start using it. L
 2. Install openpixel `npm i openpixel`
 3. Install the dependencies for compiling openpixel via the command line with `npm install`
 4. Update the variables at the top of the `gulpfile.js` for your custom configurations. Each configuration has comments explaining it.
-5. Run gulp via the command `npm run gulp`.
+5. Run gulp via the command `npm run build`.
 
 The core files and the snippet are located under the `src/` directory. If you are working on those files you can run `npm run watch` and that will watch for any files changed in the `src/` directory and rerun gulp to recompile these files and drop them in the `dist/` directory.
 
@@ -63,7 +63,7 @@ OPIX_DESTINATION_FOLDER, OPIX_PIXEL_ENDPOINT, OPIX_JS_ENDPOINT, OPIX_VERSIONOPIX
 
 You can install openpixel as an npm module `npm i -ED openpixel` and use it from your bash or js code.
 ```
-OPIX_DESTINATION_FOLDER=/home/ubuntu/app/dist OPIX_PIXEL_ENDPOINT=http://localhost:8000/pixel.gif OPIX_JS_ENDPOINT=http://localhost:800/pixel_script.js  OPIX_PIXEL_FUNC_NAME=track-function OPIX_VERSION=1 OPIX_HEADER_COMMENT="// My custom tracker\n" npx gulp --gulpfile ./node_modules/openpixel/gulpfile.js run
+OPIX_DESTINATION_FOLDER=/home/ubuntu/app/dist OPIX_PIXEL_ENDPOINT=http://localhost:8000/pixel.gif OPIX_JS_ENDPOINT=http://localhost:800/pixel_script.js  OPIX_PIXEL_FUNC_NAME=track-function OPIX_VERSION=1 OPIX_HEADER_COMMENT="// My custom tracker\n" npx gulp --gulpfile ./node_modules/openpixel/gulpfile.js build
 ```
 
 ## Tracking Data
