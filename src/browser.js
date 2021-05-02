@@ -17,7 +17,7 @@ class Browser {
   }
 
   static isMobile() {
-    return 'ontouchstart' in document;
+    return (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
   }
 
   static userAgent() {
