@@ -14,7 +14,7 @@ Openpixel handles the hard things about building a tracking library so you don't
 Openpixel has two parts, the snippet (`snippet.html`), and the core (`openpixel.min.js`).
 
 ### Snippet
-The openpixel snippet (found at `src/snippet.html`) is the HTML code that will be put onto any webpage that will be reporting analytics. For Dockwa, our marina websites put this on every page of their website so that it would load the JS to execute beacons back to a tracking server. The snippet can be placed anywhere on the page and it will load the core openpixel JS asynchronously. To be accurate, the first part of the snippet gets the timestamp as soon as it is loaded, applies an ID (just like a Google analytics ID, to be determined by you), and ques up a "pageload" event that will be sent as soon as the core JS has asynchronously loaded.
+The openpixel snippet (found at `src/snippet.html`) is the HTML code that will be put onto any webpage that will be reporting analytics. For Dockwa, our marina websites put this on every page of their website so that it would load the JS to execute beacons back to a tracking server. The snippet can be placed anywhere on the page and it will load the core openpixel JS asynchronously. To be accurate, the first part of the snippet gets the timestamp as soon as it is loaded, applies an ID (just like a Google analytics ID, to be determined by you), and queues up a "pageload" event that will be sent as soon as the core JS has asynchronously loaded.
 
 The snippet handles things like making sure the core JavaScript will always be loaded async and is cache busted ever 24 hours so you can update the core and have customers using the updates withing the next day.
 
