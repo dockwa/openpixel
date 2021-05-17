@@ -5,7 +5,7 @@
 [![Powered by Dockwa](https://raw.githubusercontent.com/dockwa/openpixel/dockwa/by-dockwa.png)](https://engineering.dockwa.com/)
 
 ## About
-Openpixel is a customizable JavaScript library for building tracking pixels. Openpixel uses the latest technologies available with fall back support for older browsers. For example is the browser supports web beacons, openpixel will send a web beacon, if it doesn't support them it will inject a 1x1 gif into the page with tracking information as part of the images get request.
+Openpixel is a customizable JavaScript library for building tracking pixels. Openpixel uses the latest technologies available with fall back support for older browsers. For example, if the browser supports web beacons, openpixel will send a web beacon, if it doesn't support them it will inject a 1x1 gif into the page with tracking information as part of the images get request.
 
 At Dockwa we built openpixel to solve our own problems of implementing a tracking service that our marinas could put on their website to track traffic and attribution to the reservations coming through our platform.
 
@@ -14,12 +14,12 @@ Openpixel handles the hard things about building a tracking library so you don't
 Openpixel has two parts, the snippet (`snippet.html`), and the core (`openpixel.min.js`).
 
 ### Snippet
-The openpixel snippet (found at `src/snippet.html`) is the HTML code that will be put onto any webpage that will be reporting analytics. For Dockwa, our marina websites put this on every page of their website so that it would load the JS to execute beacons back to a tracking server. The snippet can be placed anywhere on the page and it will load the core openpixel JS asynchronously. To be accurate, the first part of the snippet gets the timestamp as soon as it is loaded, applies an ID (just like a Google analytics ID, to be determined by you), and ques up a "pageload" event that will be sent as soon as the core JS has asynchronously loaded.
+The openpixel snippet (found at `src/snippet.html`) is the HTML code that will be put onto any webpage that will be reporting analytics. For Dockwa, our marina websites put this on every page of their website so that it would load the JS to execute beacons back to a tracking server. The snippet can be placed anywhere on the page and it will load the core openpixel JS asynchronously. To be accurate, the first part of the snippet gets the timestamp as soon as it is loaded, applies an ID (just like a Google analytics ID, to be determined by you), and queues up a "pageload" event that will be sent as soon as the core JS has asynchronously loaded.
 
-The snippet handles things like making sure the core JavaScript will always be loaded async and is cache busted ever 24 hours so you can update the core and have customers using the updates withing the next day.
+The snippet handles things like making sure the core JavaScript will always be loaded async and is cache busted every 24 hours so you can update the core and have customers using the updates within the next day.
 
 ### Core
-The openpixel core (found at `src/openpixel.min.js`) is the JavaScript code that that the snippet loads asynchronously onto the clients website. The core is what does all of the heavy lifting. The core handles settings cookies, collecting utms, and of course sending beacons and tracking pixels of data when events are called.
+The openpixel core (found at `src/openpixel.min.js`) is the JavaScript code that that the snippet loads asynchronously onto the client's website. The core is what does all of the heavy lifting. The core handles settings cookies, collecting utms, and of course sending beacons and tracking pixels of data when events are called.
 
 ### Events
 There are 2 automatic events, the `pageload` event which is sent as the main event when a page is loaded, you could consider it to be a "hit". The other event is `pageclose` and this is sent when the pages is closed or navigated away from. For example, to calculate how long a user viewed a page, you could calculate the difference between the timestamps on pageload and pageclose and those timestamps will be accurate because they are triggered on the client side when the events actually happened.
