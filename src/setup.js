@@ -24,7 +24,19 @@ for (var i = 0, l = pixelFunc.queue.length; i < l; i++) {
   pixelFunc.process.apply(pixelFunc, pixelFunc.queue[i]);
 }
 
-window.addEventListener('unload', function() {
+// https://github.com/GoogleChromeLabs/page-lifecycle/blob/master/src/Lifecycle.mjs
+// Safari does not reliably fire the `pagehide` or `visibilitychange`
+var isNotSafari = !(typeof safari === 'object' && safari.pushNotification);
+var isPageHideSupported = 'onpageshow' in self;
+
+// IE9-10 do not support the pagehide event, so we fall back to unload
+// pagehide event is more reliable but less broad than unload event for mobile and modern browsers
+var pageCloseEvent =
+  isPageHideSupported && isNotSafari
+    ? 'pagehide'
+    : 'unload';
+
+window.addEventListener(pageCloseEvent, function() {
   if (!Config.pageCloseOnce) {
     Config.pageCloseOnce = true;
     new Pixel('pageclose', Helper.now(), function() {
