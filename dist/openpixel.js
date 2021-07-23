@@ -1,8 +1,8 @@
-// Open Pixel v1.2.0 | Published By Dockwa | Created By Stuart Yamartino | MIT License
+// Open Pixel v1.3.0 | Published By Dockwa | Created By Stuart Yamartino | MIT License
 ;(function(window, document, pixelFunc, pixelFuncName, pixelEndpoint, versionNumber) {
 "use strict";
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
@@ -97,7 +97,7 @@ var Browser = /*#__PURE__*/function () {
   }, {
     key: "isMobile",
     value: function isMobile() {
-      return 'ontouchstart' in document;
+      return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
     }
   }, {
     key: "userAgent",
@@ -209,8 +209,8 @@ var Url = /*#__PURE__*/function () {
 
   _createClass(Url, null, [{
     key: "getParameterByName",
-    // http://stackoverflow.com/a/901144/1231563
-    value: function getParameterByName(name, url) {
+    value: // http://stackoverflow.com/a/901144/1231563
+    function getParameterByName(name, url) {
       if (!url) url = window.location.href;
       name = name.replace(/[\[\]]/g, "\\$&");
       var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i"),
@@ -411,9 +411,16 @@ pixelFunc.process = function (method, value, optional) {
 
 for (var i = 0, l = pixelFunc.queue.length; i < l; i++) {
   pixelFunc.process.apply(pixelFunc, pixelFunc.queue[i]);
-}
+} // https://github.com/GoogleChromeLabs/page-lifecycle/blob/master/src/Lifecycle.mjs
+// Safari does not reliably fire the `pagehide` or `visibilitychange`
 
-window.addEventListener('unload', function () {
+
+var isSafari = (typeof safari === "undefined" ? "undefined" : _typeof(safari)) === 'object' && safari.pushNotification;
+var isPageHideSupported = ('onpageshow' in self); // IE9-10 do not support the pagehide event, so we fall back to unload
+// pagehide event is more reliable but less broad than unload event for mobile and modern browsers
+
+var pageCloseEvent = isPageHideSupported && !isSafari ? 'pagehide' : 'unload';
+window.addEventListener(pageCloseEvent, function () {
   if (!Config.pageCloseOnce) {
     Config.pageCloseOnce = true;
     new Pixel('pageclose', Helper.now(), function () {

@@ -1,7 +1,7 @@
 // ---------- Configurations for your custom build of open pixel ---------- //
 
 // This is the header comment that will be included at the top of the "dist/openpixel.js" file
-var HEADER_COMMENT     = process.env.OPIX_HEADER_COMMENT || '// Open Pixel v1.2.0 | Published By Dockwa | Created By Stuart Yamartino | MIT License\n';
+var HEADER_COMMENT     = process.env.OPIX_HEADER_COMMENT || '// Open Pixel v1.3.0 | Published By Dockwa | Created By Stuart Yamartino | MIT License\n';
 
 // This is where the compiled snippet and openpixel.js files will be dropped
 var DESTINATION_FOLDER = process.env.OPIX_DESTINATION_FOLDER || './dist';
