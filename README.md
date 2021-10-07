@@ -14,7 +14,7 @@ Openpixel handles the hard things about building a tracking library so you don't
 Openpixel has two parts, the snippet (`snippet.html`), and the core (`openpixel.min.js`).
 
 ### Snippet
-The openpixel snippet (found at `src/snippet.html`) is the HTML code that will be put onto any webpage that will be reporting analytics. For Dockwa, our marina websites put this on every page of their website so that it would load the JS to execute beacons back to a tracking server. The snippet can be placed anywhere on the page and it will load the core openpixel JS asynchronously. To be accurate, the first part of the snippet gets the timestamp as soon as it is loaded, applies an ID (just like a Google analytics ID, to be determined by you), and queues up a "pageload" event that will be sent as soon as the core JS has asynchronously loaded.
+The openpixel snippet (found at `dist/snippet.html`) is the HTML code that will be put onto any webpage that will be reporting analytics. For Dockwa, our marina websites put this on every page of their website so that it would load the JS to execute beacons back to a tracking server. The snippet can be placed anywhere on the page and it will load the core openpixel JS asynchronously. To be accurate, the first part of the snippet gets the timestamp as soon as it is loaded, applies an ID (just like a Google analytics ID, to be determined by you), and queues up a "pageload" event that will be sent as soon as the core JS has asynchronously loaded.
 
 The snippet handles things like making sure the core JavaScript will always be loaded async and is cache busted every 24 hours so you can update the core and have customers using the updates within the next day.
 
@@ -48,7 +48,7 @@ Openpixel needs to be customized for your needs before you can start using it. L
 2. Install openpixel `npm i openpixel`
 3. Install the dependencies for compiling openpixel via the command line with `npm install`
 4. Update the variables at the top of the `gulpfile.js` for your custom configurations. Each configuration has comments explaining it.
-5. Run gulp via the command `npm run build`.
+5. Run gulp via the command `npm run dist`.
 
 The core files and the snippet are located under the `src/` directory. If you are working on those files you can run `npm run watch` and that will watch for any files changed in the `src/` directory and rerun gulp to recompile these files and drop them in the `dist/` directory.
 
