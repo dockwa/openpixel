@@ -33,7 +33,7 @@ class Cookie {
   }
 
   static setUtms() {
-    var utmArray = ['utm_source', 'utm_medium', 'utm_term', 'utm_content', 'utm_campaign'];
+    var utmArray = ['utm_source', 'utm_medium', 'utm_term', 'utm_content', 'utm_campaign', 'utm_source_platform', 'utm_creative_format', 'utm_marketing_tactic'];
     var exists = false;
     for (var i = 0, l = utmArray.length; i < l; i++) {
       if (Helper.isPresent(Url.getParameterByName(utmArray[i]))) {
