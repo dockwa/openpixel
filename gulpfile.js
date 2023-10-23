@@ -6,6 +6,9 @@ var HEADER_COMMENT     = process.env.OPIX_HEADER_COMMENT || '// Open Pixel v1.3.
 // This is where the compiled snippet and openpixel.js files will be dropped
 var DESTINATION_FOLDER = process.env.OPIX_DESTINATION_FOLDER || './dist';
 
+// The library used to storage utm params and user id
+var STORAGE_LIBRARY = process.env.OPIX_STORAGE_LIBRARY || 'cookie.js';
+
 // The name of the global function and the cookie prefix that will be included in the snippet and is the client to fire off custom events
 var PIXEL_FUNC_NAME    = process.env.OPIX_PIXEL_FUNC_NAME || 'opix';
 
@@ -36,7 +39,7 @@ function openpixel() {
     './src/config.js',
     './src/helper.js',
     './src/browser.js',
-    './src/cookie.js',
+    './src/'+STORAGE_LIBRARY,
     './src/url.js',
     './src/pixel.js',
     './src/setup.js',

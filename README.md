@@ -9,7 +9,7 @@ Openpixel is a customizable JavaScript library for building tracking pixels. Ope
 
 At Dockwa we built openpixel to solve our own problems of implementing a tracking service that our marinas could put on their website to track traffic and attribution to the reservations coming through our platform.
 
-Openpixel handles the hard things about building a tracking library so you don't have to. It handles things like tracking unique users with cookies, tracking utm tags and persisting them to that users session, getting all of the information about the clients browser and device, and many other neat tricks for performant and accurate analytics.
+Openpixel handles the hard things about building a tracking library so you don't have to. It handles things like tracking unique users with browser storage (cookies or local), tracking utm tags and persisting them to that users session, getting all of the information about the clients browser and device, and many other neat tricks for performant and accurate analytics.
 
 Openpixel has two parts, the snippet (`snippet.html`), and the core (`openpixel.min.js`).
 
@@ -19,7 +19,7 @@ The openpixel snippet (found at `dist/snippet.html`) is the HTML code that will 
 The snippet handles things like making sure the core JavaScript will always be loaded async and is cache busted every 24 hours so you can update the core and have customers using the updates within the next day.
 
 ### Core
-The openpixel core (found at `src/openpixel.min.js`) is the JavaScript code that that the snippet loads asynchronously onto the client's website. The core is what does all of the heavy lifting. The core handles settings cookies, collecting utms, and of course sending beacons and tracking pixels of data when events are called.
+The openpixel core (found at `src/openpixel.min.js`) is the JavaScript code that that the snippet loads asynchronously onto the client's website. The core is what does all of the heavy lifting. The core handles settings variables to storage, collecting utms, and of course sending beacons and tracking pixels of data when events are called.
 
 ### Events
 There are 2 automatic events, the `pageload` event which is sent as the main event when a page is loaded, you could consider it to be a "hit". The other event is `pageclose` and this is sent when the pages is closed or navigated away from. For example, to calculate how long a user viewed a page, you could calculate the difference between the timestamps on pageload and pageclose and those timestamps will be accurate because they are triggered on the client side when the events actually happened.
@@ -58,12 +58,12 @@ The `src/snippet.js` file is what is compiled into the `dist/snippet.html` file.
 You may also need to build different versions of openpixel for different environments with custom options.
 Environment variables can be used to configure the build:
 ```
-OPIX_DESTINATION_FOLDER, OPIX_PIXEL_ENDPOINT, OPIX_JS_ENDPOINT, OPIX_VERSIONOPIX_PIXEL_FUNC_NAME, OPIX_VERSION, OPIX_HEADER_COMMENT
+OPIX_DESTINATION_FOLDER, OPIX_PIXEL_ENDPOINT, OPIX_JS_ENDPOINT, OPIX_VERSIONOPIX_PIXEL_FUNC_NAME, OPIX_VERSION, OPIX_STORAGE_LIBRARY, OPIX_HEADER_COMMENT
 ```
 
 You can install openpixel as an npm module `npm i -ED openpixel` and use it from your bash or js code.
 ```
-OPIX_DESTINATION_FOLDER=/home/ubuntu/app/dist OPIX_PIXEL_ENDPOINT=http://localhost:8000/pixel.gif OPIX_JS_ENDPOINT=http://localhost:800/pixel_script.js  OPIX_PIXEL_FUNC_NAME=track-function OPIX_VERSION=1 OPIX_HEADER_COMMENT="// My custom tracker\n" npx gulp --gulpfile ./node_modules/openpixel/gulpfile.js build
+OPIX_DESTINATION_FOLDER=/home/ubuntu/app/dist OPIX_STORAGE_LIBRARY=cookies.js OPIX_PIXEL_ENDPOINT=http://localhost:8000/pixel.gif OPIX_JS_ENDPOINT=http://localhost:800/pixel_script.js  OPIX_PIXEL_FUNC_NAME=track-function OPIX_VERSION=1 OPIX_HEADER_COMMENT="// My custom tracker\n" npx gulp --gulpfile ./node_modules/openpixel/gulpfile.js build
 ```
 
 ## Tracking Data
